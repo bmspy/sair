@@ -1,0 +1,801 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00E356F31AD99517003FC87E /* SayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SayerTests.m */; };
+		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		360327673899FC88101ECFA4 /* libPods-Sayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B36822BD5814C5FBA72A566 /* libPods-Sayer.a */; };
+		42E361476A2C0BFDEB298745 /* libPods-Sayer-SayerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAEAC04B4887E629EE0B3E59 /* libPods-Sayer-SayerTests.a */; };
+		A14844912731608500E71FEE /* ArbFONTS-Tajawal-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A14844862731608400E71FEE /* ArbFONTS-Tajawal-Regular.ttf */; };
+		A14844922731608500E71FEE /* ArbFONTS-Tajawal-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A14844872731608400E71FEE /* ArbFONTS-Tajawal-ExtraLight.ttf */; };
+		A14844932731608500E71FEE /* ArbFONTS-Tajawal-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A14844882731608400E71FEE /* ArbFONTS-Tajawal-ExtraBold.ttf */; };
+		A14844942731608500E71FEE /* ArbFONTS-Tajawal-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A14844892731608400E71FEE /* ArbFONTS-Tajawal-Bold.ttf */; };
+		A14844952731608500E71FEE /* ArbFONTS-Tajawal-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A148448A2731608400E71FEE /* ArbFONTS-Tajawal-Light.ttf */; };
+		A14844962731608500E71FEE /* ArbFONTS-Tajawal-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A148448B2731608400E71FEE /* ArbFONTS-Tajawal-Black.ttf */; };
+		A14844972731608500E71FEE /* ArbFONTS-Tajawal-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A148448C2731608400E71FEE /* ArbFONTS-Tajawal-Medium.ttf */; };
+		A14844982731608500E71FEE /* ArbFONTS-Tajawal-Bold-1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A148448D2731608400E71FEE /* ArbFONTS-Tajawal-Bold-1.ttf */; };
+		A14844992731608500E71FEE /* ArbFONTS-Tajawal-Bold-2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A148448E2731608400E71FEE /* ArbFONTS-Tajawal-Bold-2.ttf */; };
+		A148449A2731608500E71FEE /* ArbFONTS-Tajawal-Regular-2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A148448F2731608400E71FEE /* ArbFONTS-Tajawal-Regular-2.ttf */; };
+		A148449B2731608500E71FEE /* ArbFONTS-Tajawal-Regular-1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A14844902731608400E71FEE /* ArbFONTS-Tajawal-Regular-1.ttf */; };
+		A14844D4273160BC00E71FEE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		00E356F41AD99517003FC87E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
+			remoteInfo = Sayer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00E356EE1AD99517003FC87E /* SayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* SayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SayerTests.m; sourceTree = "<group>"; };
+		10B0C34020121E7223F560B9 /* Pods-Sayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sayer.debug.xcconfig"; path = "Target Support Files/Pods-Sayer/Pods-Sayer.debug.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* Sayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Sayer/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Sayer/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Sayer/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sayer/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Sayer/main.m; sourceTree = "<group>"; };
+		1504459A9659412182F38411 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		2C67B0995AFA44249FB74FF3 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		3808C333A006F0BD0C2B7A2E /* Pods-Sayer-SayerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sayer-SayerTests.debug.xcconfig"; path = "Target Support Files/Pods-Sayer-SayerTests/Pods-Sayer-SayerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		38CA2F939BBC422C9F693B2C /* ArbFONTS-Tajawal-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ArbFONTS-Tajawal-ExtraBold.ttf"; path = "../asstes/fonts/ArbFONTS-Tajawal-ExtraBold.ttf"; sourceTree = "<group>"; };
+		3B36822BD5814C5FBA72A566 /* libPods-Sayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Sayer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4058ECFD8EEA435E83571997 /* ArbFONTS-Tajawal-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ArbFONTS-Tajawal-Bold.ttf"; path = "../asstes/fonts/ArbFONTS-Tajawal-Bold.ttf"; sourceTree = "<group>"; };
+		47B8CBD7AAD74574893376BE /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		49B6AB59A6AE416CB53A2D45 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
+		4DEE7FED20B74F44BB706AAD /* ArbFONTS-Tajawal-Bold-1.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ArbFONTS-Tajawal-Bold-1.ttf"; path = "../asstes/fonts/ArbFONTS-Tajawal-Bold-1.ttf"; sourceTree = "<group>"; };
+		5287943A34914259AE218492 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		587244095AA343288F194A2B /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		602A93CEECE844ABB3A4471E /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		702DAE9488B841149A9FF192 /* ArbFONTS-Tajawal-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ArbFONTS-Tajawal-ExtraLight.ttf"; path = "../asstes/fonts/ArbFONTS-Tajawal-ExtraLight.ttf"; sourceTree = "<group>"; };
+		720E945A22784A469C221D3E /* ArbFONTS-Tajawal-Bold-2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ArbFONTS-Tajawal-Bold-2.ttf"; path = "../asstes/fonts/ArbFONTS-Tajawal-Bold-2.ttf"; sourceTree = "<group>"; };
+		7DE98CF82EEE4867B5EDD8EE /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		80AF7E07E749459FBD36E186 /* ArbFONTS-Tajawal-Regular-2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ArbFONTS-Tajawal-Regular-2.ttf"; path = "../asstes/fonts/ArbFONTS-Tajawal-Regular-2.ttf"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Sayer/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		861F2F0B8817A2500F8EF784 /* Pods-Sayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sayer.release.xcconfig"; path = "Target Support Files/Pods-Sayer/Pods-Sayer.release.xcconfig"; sourceTree = "<group>"; };
+		8625655204164F839ED7039E /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		864C4992A51244EFBBBA3FBB /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		8FC3CD04721148669E3384B0 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		968FB1E35B80440985CA1CF6 /* ArbFONTS-Tajawal-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ArbFONTS-Tajawal-Medium.ttf"; path = "../asstes/fonts/ArbFONTS-Tajawal-Medium.ttf"; sourceTree = "<group>"; };
+		993D06127C624D0FB796E796 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		A14844862731608400E71FEE /* ArbFONTS-Tajawal-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ArbFONTS-Tajawal-Regular.ttf"; sourceTree = "<group>"; };
+		A14844872731608400E71FEE /* ArbFONTS-Tajawal-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ArbFONTS-Tajawal-ExtraLight.ttf"; sourceTree = "<group>"; };
+		A14844882731608400E71FEE /* ArbFONTS-Tajawal-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ArbFONTS-Tajawal-ExtraBold.ttf"; sourceTree = "<group>"; };
+		A14844892731608400E71FEE /* ArbFONTS-Tajawal-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ArbFONTS-Tajawal-Bold.ttf"; sourceTree = "<group>"; };
+		A148448A2731608400E71FEE /* ArbFONTS-Tajawal-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ArbFONTS-Tajawal-Light.ttf"; sourceTree = "<group>"; };
+		A148448B2731608400E71FEE /* ArbFONTS-Tajawal-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ArbFONTS-Tajawal-Black.ttf"; sourceTree = "<group>"; };
+		A148448C2731608400E71FEE /* ArbFONTS-Tajawal-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ArbFONTS-Tajawal-Medium.ttf"; sourceTree = "<group>"; };
+		A148448D2731608400E71FEE /* ArbFONTS-Tajawal-Bold-1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ArbFONTS-Tajawal-Bold-1.ttf"; sourceTree = "<group>"; };
+		A148448E2731608400E71FEE /* ArbFONTS-Tajawal-Bold-2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ArbFONTS-Tajawal-Bold-2.ttf"; sourceTree = "<group>"; };
+		A148448F2731608400E71FEE /* ArbFONTS-Tajawal-Regular-2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ArbFONTS-Tajawal-Regular-2.ttf"; sourceTree = "<group>"; };
+		A14844902731608400E71FEE /* ArbFONTS-Tajawal-Regular-1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ArbFONTS-Tajawal-Regular-1.ttf"; sourceTree = "<group>"; };
+		B65A1AD853D44DCDB630B536 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
+		B9417FD9A9154FF99C6BCB07 /* ArbFONTS-Tajawal-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ArbFONTS-Tajawal-Regular.ttf"; path = "../asstes/fonts/ArbFONTS-Tajawal-Regular.ttf"; sourceTree = "<group>"; };
+		B95AB248CFCB461E9C684DA6 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		C846A9D56C5847C1ACC55901 /* ArbFONTS-Tajawal-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ArbFONTS-Tajawal-Light.ttf"; path = "../asstes/fonts/ArbFONTS-Tajawal-Light.ttf"; sourceTree = "<group>"; };
+		D071508746D9498FBFBE54D3 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		D5B5BEB3435E4F509D423768 /* ArbFONTS-Tajawal-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ArbFONTS-Tajawal-Black.ttf"; path = "../asstes/fonts/ArbFONTS-Tajawal-Black.ttf"; sourceTree = "<group>"; };
+		DF48BDC0652D4C9499B0EBBE /* ArbFONTS-Tajawal-Regular-1.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ArbFONTS-Tajawal-Regular-1.ttf"; path = "../asstes/fonts/ArbFONTS-Tajawal-Regular-1.ttf"; sourceTree = "<group>"; };
+		EA70BB2A63A0F6D4919EDB52 /* Pods-Sayer-SayerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sayer-SayerTests.release.xcconfig"; path = "Target Support Files/Pods-Sayer-SayerTests/Pods-Sayer-SayerTests.release.xcconfig"; sourceTree = "<group>"; };
+		EAEAC04B4887E629EE0B3E59 /* libPods-Sayer-SayerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Sayer-SayerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		FA59528CD6A549AC9894AEBE /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		00E356EB1AD99517003FC87E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42E361476A2C0BFDEB298745 /* libPods-Sayer-SayerTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				360327673899FC88101ECFA4 /* libPods-Sayer.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		00E356EF1AD99517003FC87E /* SayerTests */ = {
+			isa = PBXGroup;
+			children = (
+				00E356F21AD99517003FC87E /* SayerTests.m */,
+				00E356F01AD99517003FC87E /* Supporting Files */,
+			);
+			path = SayerTests;
+			sourceTree = "<group>";
+		};
+		00E356F01AD99517003FC87E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				00E356F11AD99517003FC87E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		13B07FAE1A68108700A75B9A /* Sayer */ = {
+			isa = PBXGroup;
+			children = (
+				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				13B07FB61A68108700A75B9A /* Info.plist */,
+				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+				13B07FB71A68108700A75B9A /* main.m */,
+			);
+			name = Sayer;
+			sourceTree = "<group>";
+		};
+		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
+				3B36822BD5814C5FBA72A566 /* libPods-Sayer.a */,
+				EAEAC04B4887E629EE0B3E59 /* libPods-Sayer-SayerTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		61A0B23EB3B6444ABC67BEE6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D5B5BEB3435E4F509D423768 /* ArbFONTS-Tajawal-Black.ttf */,
+				4DEE7FED20B74F44BB706AAD /* ArbFONTS-Tajawal-Bold-1.ttf */,
+				720E945A22784A469C221D3E /* ArbFONTS-Tajawal-Bold-2.ttf */,
+				4058ECFD8EEA435E83571997 /* ArbFONTS-Tajawal-Bold.ttf */,
+				38CA2F939BBC422C9F693B2C /* ArbFONTS-Tajawal-ExtraBold.ttf */,
+				702DAE9488B841149A9FF192 /* ArbFONTS-Tajawal-ExtraLight.ttf */,
+				C846A9D56C5847C1ACC55901 /* ArbFONTS-Tajawal-Light.ttf */,
+				968FB1E35B80440985CA1CF6 /* ArbFONTS-Tajawal-Medium.ttf */,
+				DF48BDC0652D4C9499B0EBBE /* ArbFONTS-Tajawal-Regular-1.ttf */,
+				80AF7E07E749459FBD36E186 /* ArbFONTS-Tajawal-Regular-2.ttf */,
+				B9417FD9A9154FF99C6BCB07 /* ArbFONTS-Tajawal-Regular.ttf */,
+				B65A1AD853D44DCDB630B536 /* AntDesign.ttf */,
+				993D06127C624D0FB796E796 /* Entypo.ttf */,
+				D071508746D9498FBFBE54D3 /* EvilIcons.ttf */,
+				864C4992A51244EFBBBA3FBB /* Feather.ttf */,
+				1504459A9659412182F38411 /* FontAwesome.ttf */,
+				2C67B0995AFA44249FB74FF3 /* FontAwesome5_Brands.ttf */,
+				7DE98CF82EEE4867B5EDD8EE /* FontAwesome5_Regular.ttf */,
+				47B8CBD7AAD74574893376BE /* FontAwesome5_Solid.ttf */,
+				49B6AB59A6AE416CB53A2D45 /* Fontisto.ttf */,
+				B95AB248CFCB461E9C684DA6 /* Foundation.ttf */,
+				5287943A34914259AE218492 /* Ionicons.ttf */,
+				8625655204164F839ED7039E /* MaterialCommunityIcons.ttf */,
+				FA59528CD6A549AC9894AEBE /* MaterialIcons.ttf */,
+				8FC3CD04721148669E3384B0 /* Octicons.ttf */,
+				587244095AA343288F194A2B /* SimpleLineIcons.ttf */,
+				602A93CEECE844ABB3A4471E /* Zocial.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		83CBB9F61A601CBA00E9B192 = {
+			isa = PBXGroup;
+			children = (
+				A14844852731608400E71FEE /* fonts */,
+				13B07FAE1A68108700A75B9A /* Sayer */,
+				832341AE1AAA6A7D00B99B32 /* Libraries */,
+				00E356EF1AD99517003FC87E /* SayerTests */,
+				83CBBA001A601CBA00E9B192 /* Products */,
+				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				CB68E552A7251724C3F93382 /* Pods */,
+				61A0B23EB3B6444ABC67BEE6 /* Resources */,
+			);
+			indentWidth = 2;
+			sourceTree = "<group>";
+			tabWidth = 2;
+			usesTabs = 0;
+		};
+		83CBBA001A601CBA00E9B192 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				13B07F961A680F5B00A75B9A /* Sayer.app */,
+				00E356EE1AD99517003FC87E /* SayerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A14844852731608400E71FEE /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A14844862731608400E71FEE /* ArbFONTS-Tajawal-Regular.ttf */,
+				A14844872731608400E71FEE /* ArbFONTS-Tajawal-ExtraLight.ttf */,
+				A14844882731608400E71FEE /* ArbFONTS-Tajawal-ExtraBold.ttf */,
+				A14844892731608400E71FEE /* ArbFONTS-Tajawal-Bold.ttf */,
+				A148448A2731608400E71FEE /* ArbFONTS-Tajawal-Light.ttf */,
+				A148448B2731608400E71FEE /* ArbFONTS-Tajawal-Black.ttf */,
+				A148448C2731608400E71FEE /* ArbFONTS-Tajawal-Medium.ttf */,
+				A148448D2731608400E71FEE /* ArbFONTS-Tajawal-Bold-1.ttf */,
+				A148448E2731608400E71FEE /* ArbFONTS-Tajawal-Bold-2.ttf */,
+				A148448F2731608400E71FEE /* ArbFONTS-Tajawal-Regular-2.ttf */,
+				A14844902731608400E71FEE /* ArbFONTS-Tajawal-Regular-1.ttf */,
+			);
+			name = fonts;
+			path = ../asstes/fonts;
+			sourceTree = "<group>";
+		};
+		CB68E552A7251724C3F93382 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				10B0C34020121E7223F560B9 /* Pods-Sayer.debug.xcconfig */,
+				861F2F0B8817A2500F8EF784 /* Pods-Sayer.release.xcconfig */,
+				3808C333A006F0BD0C2B7A2E /* Pods-Sayer-SayerTests.debug.xcconfig */,
+				EA70BB2A63A0F6D4919EDB52 /* Pods-Sayer-SayerTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		00E356ED1AD99517003FC87E /* SayerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "SayerTests" */;
+			buildPhases = (
+				116AA816FCF6388DF85365FA /* [CP] Check Pods Manifest.lock */,
+				00E356EA1AD99517003FC87E /* Sources */,
+				00E356EB1AD99517003FC87E /* Frameworks */,
+				00E356EC1AD99517003FC87E /* Resources */,
+				6F7058FCCB068860B380089E /* [CP] Embed Pods Frameworks */,
+				49C083BD4796370A925B3A6D /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				00E356F51AD99517003FC87E /* PBXTargetDependency */,
+			);
+			name = SayerTests;
+			productName = SayerTests;
+			productReference = 00E356EE1AD99517003FC87E /* SayerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		13B07F861A680F5B00A75B9A /* Sayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Sayer" */;
+			buildPhases = (
+				1467703CF7D13D01C62CA62B /* [CP] Check Pods Manifest.lock */,
+				FD10A7F022414F080027D42C /* Start Packager */,
+				13B07F871A680F5B00A75B9A /* Sources */,
+				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+				13B07F8E1A680F5B00A75B9A /* Resources */,
+				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				A8ABA0EB3715031A8201B1CA /* [CP] Embed Pods Frameworks */,
+				23A093C6379D65F836812FDA /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Sayer;
+			productName = Sayer;
+			productReference = 13B07F961A680F5B00A75B9A /* Sayer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		83CBB9F71A601CBA00E9B192 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1210;
+				TargetAttributes = {
+					00E356ED1AD99517003FC87E = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						LastSwiftMigration = 1120;
+					};
+				};
+			};
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Sayer" */;
+			compatibilityVersion = "Xcode 12.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 83CBB9F61A601CBA00E9B192;
+			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				13B07F861A680F5B00A75B9A /* Sayer */,
+				00E356ED1AD99517003FC87E /* SayerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		00E356EC1AD99517003FC87E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		13B07F8E1A680F5B00A75B9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A14844932731608500E71FEE /* ArbFONTS-Tajawal-ExtraBold.ttf in Resources */,
+				A14844922731608500E71FEE /* ArbFONTS-Tajawal-ExtraLight.ttf in Resources */,
+				A14844912731608500E71FEE /* ArbFONTS-Tajawal-Regular.ttf in Resources */,
+				A14844992731608500E71FEE /* ArbFONTS-Tajawal-Bold-2.ttf in Resources */,
+				A14844982731608500E71FEE /* ArbFONTS-Tajawal-Bold-1.ttf in Resources */,
+				A14844972731608500E71FEE /* ArbFONTS-Tajawal-Medium.ttf in Resources */,
+				A14844952731608500E71FEE /* ArbFONTS-Tajawal-Light.ttf in Resources */,
+				A148449B2731608500E71FEE /* ArbFONTS-Tajawal-Regular-1.ttf in Resources */,
+				A14844962731608500E71FEE /* ArbFONTS-Tajawal-Black.ttf in Resources */,
+				A14844D4273160BC00E71FEE /* Images.xcassets in Resources */,
+				A148449A2731608500E71FEE /* ArbFONTS-Tajawal-Regular-2.ttf in Resources */,
+				A14844942731608500E71FEE /* ArbFONTS-Tajawal-Bold.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		116AA816FCF6388DF85365FA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Sayer-SayerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1467703CF7D13D01C62CA62B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Sayer-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		23A093C6379D65F836812FDA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sayer/Pods-Sayer-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sayer/Pods-Sayer-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sayer/Pods-Sayer-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		49C083BD4796370A925B3A6D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sayer-SayerTests/Pods-Sayer-SayerTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sayer-SayerTests/Pods-Sayer-SayerTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sayer-SayerTests/Pods-Sayer-SayerTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6F7058FCCB068860B380089E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sayer-SayerTests/Pods-Sayer-SayerTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sayer-SayerTests/Pods-Sayer-SayerTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sayer-SayerTests/Pods-Sayer-SayerTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A8ABA0EB3715031A8201B1CA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sayer/Pods-Sayer-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sayer/Pods-Sayer-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sayer/Pods-Sayer-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FD10A7F022414F080027D42C /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		00E356EA1AD99517003FC87E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00E356F31AD99517003FC87E /* SayerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		13B07F871A680F5B00A75B9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				13B07FC11A68108700A75B9A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 13B07F861A680F5B00A75B9A /* Sayer */;
+			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		00E356F61AD99517003FC87E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3808C333A006F0BD0C2B7A2E /* Pods-Sayer-SayerTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SayerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+					"$(inherited)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sayer.app/Sayer";
+			};
+			name = Debug;
+		};
+		00E356F71AD99517003FC87E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA70BB2A63A0F6D4919EDB52 /* Pods-Sayer-SayerTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COPY_PHASE_STRIP = NO;
+				INFOPLIST_FILE = SayerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+					"$(inherited)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sayer.app/Sayer";
+			};
+			name = Release;
+		};
+		13B07F941A680F5B00A75B9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 10B0C34020121E7223F560B9 /* Pods-Sayer.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = Sayer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = Sayer;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		13B07F951A680F5B00A75B9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 861F2F0B8817A2500F8EF784 /* Pods-Sayer.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = Sayer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = Sayer;
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		83CBBA201A601CBA00E9B192 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SDKROOT)/usr/lib/swift\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		83CBBA211A601CBA00E9B192 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SDKROOT)/usr/lib/swift\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "SayerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00E356F61AD99517003FC87E /* Debug */,
+				00E356F71AD99517003FC87E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Sayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				13B07F941A680F5B00A75B9A /* Debug */,
+				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Sayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83CBBA201A601CBA00E9B192 /* Debug */,
+				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
+}
