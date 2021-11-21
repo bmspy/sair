@@ -10,9 +10,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-navigation/drawer": "^6.1.8",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "apisauce": "^2.1.2",
     "react": "17.0.2",
     "react-native": "0.66.1",
     "react-native-app-intro-slider": "^4.0.4",
@@ -21,7 +23,10 @@
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.8.0",
     "react-native-select-dropdown": "^1.2.0",
-    "react-native-vector-icons": "^9.0.0"
+    "react-native-vector-icons": "^9.0.0",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
