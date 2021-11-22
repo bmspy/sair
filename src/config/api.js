@@ -1,2 +1,1 @@
-
-export const appUrl = 'https://sair.ghaith.om'
+export const appUrl = 'http://sair.ghaith.om';

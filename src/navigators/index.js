@@ -11,6 +11,7 @@ import {
   Notes,
   Profile,
   SignIn,
+  Initial,
   SignUp,
   Request,
   ChangePassword,
@@ -22,9 +23,9 @@ import {
 } from '../screens';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {CustomDrawerContent} from '../components';
-
 const Drawer = createDrawerNavigator();
 const AppStack = createNativeStackNavigator();
+
 function MyDrawer() {
   return (
     <Drawer.Navigator
@@ -52,10 +53,12 @@ function MyDrawer() {
     </Drawer.Navigator>
   );
 }
+
 function AppNavigator() {
   return (
     <NavigationContainer>
       <AppStack.Navigator screenOptions={{headerShown: false}} animationEnabled>
+        <AppStack.Screen name={'Initial'} component={Initial} />
         <AppStack.Screen name={'OnBoarding'} component={OnBoarding} />
         <AppStack.Screen name={'SignIn'} component={SignIn} />
         <AppStack.Screen name={'SignUp'} component={SignUp} />

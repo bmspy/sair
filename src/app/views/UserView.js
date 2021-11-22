@@ -1,11 +1,21 @@
 import {create} from 'apisauce';
 import {appUrl} from '../../config/api';
-import {saveUser} from "../../redux/actions/UserActions";
+import {deleteUser, saveUser} from '../../redux/actions/UserActions';
+import {store} from "../../redux/Store";
 
 const api = create({
   baseURL: appUrl,
   headers: {'Content-Type': 'multipart/form-data;'},
 });
+
+export const register = async user => {
+  const response = await api.post('/register', {
+    ...user,
+  });
+
+  if (response.problem) {
+  }
+};
 
 export const login = async user => {
   const response = await api.post('/login', {
@@ -16,13 +26,26 @@ export const login = async user => {
   if (response.problem) {
     return false;
   }
-  saveUser(response.data.token)
+  saveUser(response.data.token, response.data.profile);
+  return true;
+};
+
+export const logout = async user => {
+  const response = await api.post(
+    '/logout',
+    {
+      civil_number: user.civil_number,
+      password: user.password(),
+    },
+    {headers: {Authorization: `Token ${store.getState().jwt}`}},
+  );
+  if (response.problem) {
+    return false;
+  }
+  deleteUser();
   return true;
 };
 
 export function forgotPassword() {}
 
 export function changePassword() {}
-export function register() {}
-
-export function logout() {}

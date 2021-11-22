@@ -68,8 +68,8 @@ export default class SignUp extends Component{
                             </Pressable>
 
                             <Pressable  onPress={()=>this.props.navigation.navigate('ForgetPassword')}>
-                            <Text style={styles.forgetText}>البنود و الشروط</Text>         
-                            </Pressable> 
+                            <Text style={styles.forgetText}>البنود و الشروط</Text>
+                            </Pressable>
                             <Pressable  style={styles.newAccount} onPress={()=>this.props.navigation.navigate('SignIn')}>
                             <Text style={styles.newAccountText}>تسجيل الدخول إلى حسابك</Text>
                             </Pressable>
@@ -81,23 +81,22 @@ export default class SignUp extends Component{
 
     render(){
         return(
-            <ImageBackground source={images.signup} 
-                             style={styles.container} 
+            <ImageBackground source={images.signup}
+                             style={styles.container}
                              imageStyle={styles.containerImge}>
-               {!this.state.next && <ScrollView style={styles.content} >                        
+               {!this.state.next && <ScrollView style={styles.content} >
                     <Text style={styles.address}>تسجيل</Text>
-
                     <Text style={styles.hello}> !انشئ حساب </Text>
 
                     <Text style={styles.label}>البريد الالكتروني</Text>
                     <TextInput placeholder={'patrick.cunningham@mail.com'} placeholderTextColor={colors.borderGrey} style={styles.input}/>
-                    
+
                     <Text style={styles.label}>الرقم المدني</Text>
                     <TextInput placeholder={'378862'} placeholderTextColor={colors.borderGrey} style={styles.input}/>
-                    
+
                     <Text style={styles.label}>الرقم الوظيفي</Text>
                     <TextInput placeholder={'378862'} placeholderTextColor={colors.borderGrey} style={styles.input}/>
-                    
+
                     <Text style={styles.label}>كلمة المرور</Text>
                     <TextInput placeholder={'******'} placeholderTextColor={colors.borderGrey} style={styles.input} secureTextEntry/>
 
@@ -107,27 +106,27 @@ export default class SignUp extends Component{
                     <Pressable onPress={()=>this.setState({next:true})} style={styles.btn}>
                         <Text style={styles.loginBtn}>التالي</Text>
                     </Pressable>
-                   
+
                <Pressable  onPress={()=>this.props.navigation.navigate('ForgetPassword')}>
-                    <Text style={styles.forgetText}>البنود و الشروط</Text>         
-               </Pressable> 
+                    <Text style={styles.forgetText}>البنود و الشروط</Text>
+               </Pressable>
                 <Pressable  style={styles.newAccount} onPress={()=>this.props.navigation.navigate('SignIn')}>
                     <Text style={styles.newAccountText}>تسجيل الدخول إلى حسابك</Text>
                 </Pressable>
 
              </ScrollView> }
-            
-               {this.state.next && 
+
+               {this.state.next &&
                Platform.OS=='ios'?
                <View style={styles.content} >
                 {this.renderContent()}
-             </View> 
+             </View>
              :
              this.state.next &&<ScrollView style={styles.content} >
                  {this.renderContent()}
-             </ScrollView> 
+             </ScrollView>
              }
-            
+
             </ImageBackground>
         )
     }

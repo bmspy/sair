@@ -12,28 +12,29 @@ import {
 
 class UserModel {
   constructor(
+    full_name,
+    email,
     identifier,
     password,
-    confirmPassword,
-    fullName,
-    email,
+    confirm_password,
     image,
     mobile,
-    civilNumber,
+    civil_number,
     job,
-    jobNumber,
+    job_number,
     department,
     gender,
   ) {
+    this.full_name = full_name;
+    this.email = email;
     this.identifier = identifier;
     this.password = password;
-    this.confirmPassword = this.fullName = fullName;
-    this.email = email;
-    this.image = image;
+    this.confirm_password = confirm_password;
     this.mobile = mobile;
-    this.civilNumber = civilNumber;
+    this.civil_number = civil_number;
     this.job = job;
-    this.jobNumber = jobNumber;
+    this.job_number = job_number;
+    this.image = image;
     this.department = department;
     this.gender = gender;
   }
@@ -64,6 +65,8 @@ class UserModel {
     if (!result) {
       throw new Error('لم يتم التسجيل بنجاح');
     }
+
+    return true;
   }
 
   async changePassword(newPassword) {

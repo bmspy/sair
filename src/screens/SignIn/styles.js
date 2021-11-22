@@ -18,6 +18,14 @@ export default StyleSheet.create({
     color: colors.white,
     fontSize: 22,
   },
+  modal: {
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    position: 'absolute',
+    backgroundColor: 'rgb(194,8,8)',
+  },
   hello: {
     width: '90%',
     ...commonStyle.BlackFont,

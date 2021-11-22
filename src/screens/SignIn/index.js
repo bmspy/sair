@@ -1,8 +1,17 @@
 import React, {Component, useState} from 'react';
-import {View, Text, ImageBackground, TextInput, Pressable} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  TextInput,
+  Pressable,
+  Modal,
+  ActivityIndicator,
+} from 'react-native';
 import {colors, images} from '../../config';
 import styles from './styles';
 import UserModel from '../../app/models/UserModel';
+import {useNavigation} from '@react-navigation/native';
 
 export default function SignIn() {
   const [civilNumber, setCivilNumber] = useState('');
@@ -10,8 +19,9 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(false);
+  const navigation = useNavigation();
 
-  const validateInput = () => {
+  const validateLoginInput = () => {
     let errors = false;
 
     if (!civilNumber || civilNumber.length === 0) {
@@ -26,19 +36,19 @@ export default function SignIn() {
   };
 
   const authenticateUser = async () => {
-    if (validateInput()) {
+    if (validateLoginInput()) {
       setLoading(true);
       const user = new UserModel(civilNumber, password);
 
       try {
         await user.login();
       } catch (err) {
-        setError(err.message);
+        alert(err.message);
         setVisible(true);
         setLoading(false);
       }
     } else {
-      setError('Please fill out all *required fields');
+      alert('يرجى ملء جميع الحقول المطلوبة');
       setVisible(true);
       setLoading(false);
     }
@@ -49,6 +59,52 @@ export default function SignIn() {
       source={images.signin}
       style={styles.container}
       imageStyle={styles.containerImge}>
+      <Modal
+        visible={true}
+        style={{
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          position: 'absolute',
+          backgroundColor: 'orange',
+        }}
+        transparent={true}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(0,0,0,.5)',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <View
+            style={{
+              width: '80%',
+              height: '30%',
+              backgroundColor: 'white',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={{fontSize: 18, color:'black'}}>
+              يرجى الإنتظار ريثما يتم تسجيل الدخول
+            </Text>
+            <ActivityIndicator
+                style={{marginTop:15, marginBottom:15}}
+                animating={true} size={'large'}
+            color={colors.primary}
+            />
+            {/*<Pressable*/}
+            {/*  style={{*/}
+            {/*    width: '80%',*/}
+            {/*    height: 45,*/}
+            {/*    backgroundColor: colors.primary,*/}
+            {/*    borderRadius: 20,*/}
+            {/*  }}>*/}
+            {/*  {}*/}
+            {/*</Pressable>*/}
+          </View>
+        </View>
+      </Modal>
       <Text style={styles.address}>تسجيل الدخول</Text>
       <Text style={styles.hello}> ! اهلا بك مجدداً </Text>
       <Text style={styles.label}>الرقم المدني</Text>
@@ -71,21 +127,16 @@ export default function SignIn() {
         onChangeText={newValue => setPassword(newValue)}
       />
 
-      <Pressable
-        onPress={() =>
-          this.props.navigation.navigate('MyDrawer', {type: 'supervisor'})
-        }
-        style={styles.btn}>
+      <Pressable onPress={() => authenticateUser()} style={styles.btn}>
         <Text style={styles.loginBtn}>تسجيل الدخول</Text>
       </Pressable>
 
-      <Pressable
-        onPress={() => this.props.navigation.navigate('ForgetPassword')}>
+      <Pressable onPress={() => navigation.navigate('ForgetPassword')}>
         <Text style={styles.forgetText}>نسيت كلمة المرور ؟</Text>
       </Pressable>
       <Pressable
         style={styles.newAccount}
-        onPress={() => this.props.navigation.navigate('SignUp')}>
+        onPress={() => navigation.navigate('SignUp')}>
         <Text style={styles.newAccountText}>انشاء حساب جديد</Text>
       </Pressable>
     </ImageBackground>
