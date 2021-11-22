@@ -11,7 +11,7 @@ import {
 } from '../views/UserView';
 
 class UserModel {
-  constructor(
+  constructor({
     full_name,
     email,
     identifier,
@@ -24,7 +24,7 @@ class UserModel {
     job_number,
     department,
     gender,
-  ) {
+  }) {
     this.full_name = full_name;
     this.email = email;
     this.identifier = identifier;
@@ -43,7 +43,7 @@ class UserModel {
     const result = await login(this);
 
     if (!result) {
-      throw new Error('Unable to login user.');
+      throw new Error('حدث خطأ أثناء تسجيل الدخول يرجى إعادة المحاولة');
     }
 
     return true;
@@ -53,7 +53,7 @@ class UserModel {
     const result = await logout(this);
 
     if (!result) {
-      throw new Error('Unable to logout user.');
+      throw new Error('حدث خطأ أثناء تسجيل الخروج يرجى إعادة المحاولة.');
     }
 
     return true;
@@ -63,7 +63,7 @@ class UserModel {
     const result = await register(this);
 
     if (!result) {
-      throw new Error('لم يتم التسجيل بنجاح');
+      throw new Error('حدث خطأ أثناء تسجيل الحساب يرجى إعادة المحاولة');
     }
 
     return true;
@@ -73,7 +73,7 @@ class UserModel {
     const result = await changePassword(this, newPassword);
 
     if (!result) {
-      throw new Error('لم يتم تغير كلمة السر بنجاح');
+      throw new Error('حدث خطأ أثناء تغير كلمة السر يرجى إعادة المحاولة');
     }
     return true;
   }

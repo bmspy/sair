@@ -18,9 +18,10 @@ export const register = async user => {
 };
 
 export const login = async user => {
+  debugger
   const response = await api.post('/login', {
     civil_number: user.civil_number,
-    password: user.password(),
+    password: user.password,
   });
 
   if (response.problem) {
