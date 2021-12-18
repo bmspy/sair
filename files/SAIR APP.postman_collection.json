@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "eec5abf6-7f11-4249-869e-f7ccd048d335",
+		"name": "SAIR APP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "civil_number",
+									"value": "405151689",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456789",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://sair.ghaith.om/login/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 12dad64d2d4a42d5887fc7aec8fac7ee13618a3ff7aabcbd346ebd30587880c9",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://sair.ghaith.om/logout/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"logout",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "عبد الكريم الدبش",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "karim@karim.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456789",
+									"description": "password must be >= 8",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "123456789",
+									"description": "password must be >= 8",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "image must be file",
+									"type": "file",
+									"src": "/home/karim/Downloads/images/test4.jpg"
+								},
+								{
+									"key": "mobile",
+									"value": "05977777764",
+									"type": "text"
+								},
+								{
+									"key": "civil_number",
+									"value": "405151689",
+									"type": "text"
+								},
+								{
+									"key": "job",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "job_number",
+									"value": "50501",
+									"type": "text"
+								},
+								{
+									"key": "department",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "Male",
+									"description": "Male - Female",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://sair.ghaith.om/register/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 61be92e494edaf159ab8b1806b41a332ffc6970a539686c051a6af472e1279b3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "old_password",
+									"value": "1234afsfasfsafas",
+									"type": "text"
+								},
+								{
+									"key": "new_password",
+									"value": "1234afsfasfsafass",
+									"type": "text"
+								},
+								{
+									"key": "confirm_new_password",
+									"value": "1234afsfasfsafass",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://sair.ghaith.om/change_password/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"change_password",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forget Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "karim@karim.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://sair.ghaith.om/forget/password/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"forget",
+								"password",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "APP API",
+			"item": [
+				{
+					"name": "Get Departments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://sair.ghaith.om/get/departments/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"get",
+								"departments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Jobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://sair.ghaith.om/get/jobs/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"get",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,685 @@
+{
+	"info": {
+		"_postman_id": "dc9a042b-ac64-481b-a7b6-8e92fa42feb1",
+		"name": "SAIR",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "civil_number",
+									"value": "405151689",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456789",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://sair.ghaith.om/login/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 12dad64d2d4a42d5887fc7aec8fac7ee13618a3ff7aabcbd346ebd30587880c9",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://sair.ghaith.om/logout/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"logout",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "عبد الكريم الدبش",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "karimwss3@karim.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456789",
+									"description": "password must be >= 8",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "123456789",
+									"description": "password must be >= 8",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "image must be file",
+									"type": "file",
+									"src": "/home/karim/Downloads/images/test4.jpg"
+								},
+								{
+									"key": "mobile",
+									"value": "05977777764",
+									"type": "text"
+								},
+								{
+									"key": "civil_number",
+									"value": "405151689",
+									"type": "text"
+								},
+								{
+									"key": "job",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "job_number",
+									"value": "50501w",
+									"type": "text"
+								},
+								{
+									"key": "department",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "Male",
+									"description": "Male - Female",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://sair.ghaith.om/register/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 0fb416f8b2224b47e758efe7d431f649e6f286038080a5826f9aa8c496b987c3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "old_password",
+									"value": "1234afsfasfsafas",
+									"type": "text"
+								},
+								{
+									"key": "new_password",
+									"value": "1234afsfasfsafass",
+									"type": "text"
+								},
+								{
+									"key": "confirm_new_password",
+									"value": "1234afsfasfsafass",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://sair.ghaith.om/change_password/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"change_password",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forget Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "karim@karim.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://sair.ghaith.om/forget/password/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"forget",
+								"password",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Terms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://sair.ghaith.om/get/terms/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"get",
+								"terms",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "APP API",
+			"item": [
+				{
+					"name": "Profile Api",
+					"item": [
+						{
+							"name": "Get Profile",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Token 2109e148fcc1bd017da186a279735f6763cbbb04bfa1dad6a09197f908fc7803"
+									}
+								],
+								"url": {
+									"raw": "http://sair.ghaith.om/get/profile/",
+									"protocol": "http",
+									"host": [
+										"sair",
+										"ghaith",
+										"om"
+									],
+									"path": [
+										"get",
+										"profile",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit Profile",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token 2b4b1faa757942a947be7ed59473cf3e97581540f580c936b27f719c73e96ab0",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "full_name",
+											"value": "abed",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "karim2@karim.com",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"description": "image must be file",
+											"type": "file",
+											"src": "/home/karim/Downloads/images/test8.jpeg"
+										},
+										{
+											"key": "mobile",
+											"value": "05997778",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://sair.ghaith.om/edit/profile/",
+									"protocol": "http",
+									"host": [
+										"sair",
+										"ghaith",
+										"om"
+									],
+									"path": [
+										"edit",
+										"profile",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Note Api",
+					"item": [
+						{
+							"name": "Get Notes",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Token 179ce617ba6e97a55e36a4e271778828e1d601146d30020df45508003340785b"
+									}
+								],
+								"url": {
+									"raw": "http://sair.ghaith.om/get/notes/",
+									"protocol": "http",
+									"host": [
+										"sair",
+										"ghaith",
+										"om"
+									],
+									"path": [
+										"get",
+										"notes",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Note",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token 179ce617ba6e97a55e36a4e271778828e1d601146d30020df45508003340785b",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "date",
+											"value": "2021-05-11",
+											"type": "text"
+										},
+										{
+											"key": "title",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "content",
+											"value": "hi hu",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/home/karim/Downloads/images/test5.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://sair.ghaith.om/post/note/",
+									"protocol": "http",
+									"host": [
+										"sair",
+										"ghaith",
+										"om"
+									],
+									"path": [
+										"post",
+										"note",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create PLan Api",
+					"item": [
+						{
+							"name": "GET Month days off",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token 6597aac209429bfb855b6f6b0f4169314da0764455ffc313a4191fd114bfc36c",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://sair.ghaith.om/get/month/daysoff/?month=1",
+									"protocol": "http",
+									"host": [
+										"sair",
+										"ghaith",
+										"om"
+									],
+									"path": [
+										"get",
+										"month",
+										"daysoff",
+										""
+									],
+									"query": [
+										{
+											"key": "month",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get State Schools",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token 4b7b098e0fe8b00eaf36a7ceb571fc6dcad3902aca1b26ab2220fdefb86306da",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://sair.ghaith.om/get/state/schools/",
+									"protocol": "http",
+									"host": [
+										"sair",
+										"ghaith",
+										"om"
+									],
+									"path": [
+										"get",
+										"state",
+										"schools",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Car Details",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token 4b7b098e0fe8b00eaf36a7ceb571fc6dcad3902aca1b26ab2220fdefb86306da",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://sair.ghaith.om/get/car/details/?date=2021-01-01&school=1",
+									"protocol": "http",
+									"host": [
+										"sair",
+										"ghaith",
+										"om"
+									],
+									"path": [
+										"get",
+										"car",
+										"details",
+										""
+									],
+									"query": [
+										{
+											"key": "date",
+											"value": "2021-01-01",
+											"description": "Format must be :  YYYY-MM-DD"
+										},
+										{
+											"key": "school",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Plan",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Token 179ce617ba6e97a55e36a4e271778828e1d601146d30020df45508003340785b",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "date",
+											"value": "2021-05-11",
+											"type": "text"
+										},
+										{
+											"key": "school",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "go_method",
+											"value": "driver",
+											"description": "driver - owen_car",
+											"type": "text"
+										},
+										{
+											"key": "car",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "car_seat",
+											"value": "5",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://sair.ghaith.om/post/plan/",
+									"protocol": "http",
+									"host": [
+										"sair",
+										"ghaith",
+										"om"
+									],
+									"path": [
+										"post",
+										"plan",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get Departments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://sair.ghaith.om/get/departments/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"get",
+								"departments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Jobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://sair.ghaith.om/get/jobs/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"get",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get States",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 0fb416f8b2224b47e758efe7d431f649e6f286038080a5826f9aa8c496b987c3",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://sair.ghaith.om/get/states/",
+							"protocol": "http",
+							"host": [
+								"sair",
+								"ghaith",
+								"om"
+							],
+							"path": [
+								"get",
+								"states",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
