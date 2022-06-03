@@ -1,3 +1,5 @@
+// Developed by Mustafa Alabadla
+
 //UI
 export const UI_START_LOADING = 'UI_START_LOADING';
 export const UI_STOP_LOADING = 'UI_STOP_LOADING';
@@ -21,3 +23,6 @@ export const SET_PLANS = 'SET_PLANS';
 export const SET_PLACE_DATA = 'SET_PLACE_DATA';
 export const SET_PLAN_DONE_MODAL = 'SET_PLAN_DONE_MODAL';
 export const SET_PLAN_DETAILS_DATE = 'SET_PLAN_DETAILS_DATE';
+export const SET_PLAN_APPROVE_MODAL = 'SET_PLAN_APPROVE_MODAL';
+export const SET_MONTH_PLAN_ID = 'SET_MONTH_PLAN_ID';
+export const SET_SELECTED_DATE = 'SET_SELECTED_DATE';

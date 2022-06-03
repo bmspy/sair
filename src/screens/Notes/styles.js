@@ -80,7 +80,7 @@ export default StyleSheet.create({
         // height:85,
         textAlign:'left',
         fontWeight: 'normal',
-        resizeMode: 'contain',
+        // resizeMode: 'contain',
         maxHeight:107,
     },
     searchView:{
@@ -173,7 +173,7 @@ export default StyleSheet.create({
         // paddingHorizontal:'5%',
         paddingVertical:'3%',
         // flexDirection:'row',
-        alignItems:'center',
+        // alignItems:'center',
         // overflow: 'hidden',
         // justifyContent:'space-between'
     },

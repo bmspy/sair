@@ -38,7 +38,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {createPlan} from '../../redux/actions/Index';
+import {createPlan, setPlan} from '../../redux/actions/Index';
 import {API_URL} from '@env';
 
 const ChooseYourSeat = props => {
@@ -300,18 +300,30 @@ const ChooseYourSeat = props => {
 
   const handleCreatePlan = () => {
     onClose();
-    const formData = new FormData();
-    formData.append('date', props.plan.date);
-    formData.append('destination_type', props.plan.destination_type);
-    formData.append('destination', props.plan.destination);
-    formData.append('go_method', props.plan.go_method);
-    formData.append('car', carDetails?.id);
-    if (selectedAreaId) {
-      formData.append('car_seat', selectedAreaId);
-      props.onCreatePlan(formData, navigation.navigate, toast);
+    if (props.plan?.editPlan) {
+      let newPlan = props.plan;
+      newPlan.car = carDetails?.id;
+      newPlan.car_seat = Number(selectedAreaId) + 1;
+      props.onSetPlan(newPlan);
+      navigation.navigate('EditPlane');
+      toast.show({
+        description: 'تم تعديل الخطة بنجاح',
+      });
     } else {
-      alert('الرجاء اختيار مقعد قبل التأكيد');
+      const formData = new FormData();
+      formData.append('date', props.plan.date);
+      formData.append('destination_type', props.plan.destination_type);
+      formData.append('destination', props.plan.destination);
+      formData.append('go_method', props.plan.go_method);
+      formData.append('car', carDetails?.id);
+      if (selectedAreaId) {
+        formData.append('car_seat', Number(selectedAreaId) + 1);
+        props.onCreatePlan(formData, navigation.navigate, toast);
+      } else {
+        alert('الرجاء اختيار مقعد قبل التأكيد');
+      }
     }
+
     // console.log(format(selectedDay, 'yyyy-MM-dd'));
     // navigation.navigate('SchoolRoute');
   };
@@ -357,11 +369,12 @@ const ChooseYourSeat = props => {
       {/* <Image style={styles.content} source={images.car_img} /> */}
       <View style={styles.driverView}>
         <HStack alignItems="center" space={2}>
-          <Image style={styles.img} source={images.avatar_new} />
-          <Text style={[styles.address, {height: null}]}>
+          <Image style={styles.img} source={{uri: carDetails?.driver_details?.image}} />
+          <Text numberOfLines={1} style={[styles.address, {height: null, fontSize: 14}]}>
             {carDetails?.driver_details?.full_name}
           </Text>
         </HStack>
+        {/* <Pressable onPress={() => console.log(props.plan)} style={styles.driver_btn}> */}
         <Pressable onPress={onOpen} style={styles.driver_btn}>
           <Text style={styles.driver_txt}>بيانات السائق</Text>
         </Pressable>
@@ -385,7 +398,7 @@ const ChooseYourSeat = props => {
           })}
         </Text>
         {/* <Text style={styles.date}>الأربعاء 7 أكتوبر , 2021</Text> */}
-        <Text style={styles.school}>مدرسة: {props.plan.schoolName} </Text>
+        <Text numberOfLines={1} style={[styles.school, {width: '60%'}]}>مدرسة: {props.plan?.schoolName} </Text>
         {/* <Text style={styles.school}>مدرسة: وادي الحيول</Text> */}
       </View>
       <View style={[styles.dateView, {width: '60%'}]}>
@@ -395,7 +408,7 @@ const ChooseYourSeat = props => {
           <Text style={styles.driver_txt}>تأكيد التنفيذ'</Text>
         </Pressable>
         <Pressable
-          //   onPress={() => this.props.onRequestCChoose('الغاء')}
+          onPress={() => navigation.goBack()}
           style={[
             styles.driver_btn,
             {backgroundColor: colors.red, width: 100},
@@ -424,7 +437,7 @@ const ChooseYourSeat = props => {
                 bg="cyan.500"
                 alignSelf="center"
                 size="lg"
-                source={images.avatar_new}
+                source={{uri: carDetails?.driver_details?.image}}
               />
             </VStack>
             <VStack style={{width: '100%', alignItems: 'center'}} space={3}>
@@ -436,9 +449,10 @@ const ChooseYourSeat = props => {
                   borderRadius: 20,
                 }}>
                 <Text
+                  numberOfLines={1}
                   style={[
                     styles.address,
-                    {height: null, fontWeight: 'normal'},
+                    {height: null, fontWeight: 'normal', width: '95%'},
                   ]}>
                   الاسم : {carDetails?.driver_details?.full_name}
                 </Text>
@@ -552,7 +566,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onCreatePlan: (plan, navigateToTarget, toast) => dispatch(createPlan(plan, navigateToTarget, toast)),
+  onSetPlan: plan => dispatch(setPlan(plan)),
   // onSetPlan: (plan) => dispatch(setPlan(plan)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChooseYourSeat);
+
+

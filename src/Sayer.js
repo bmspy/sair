@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {I18nManager} from 'react-native';
 import {Navigator} from './navigators';
 import {Provider} from 'react-redux';
@@ -20,3 +20,5 @@ export default function Sayer() {
     </Provider>
   );
 }
+
+// Developed by Mustafa Alabadla

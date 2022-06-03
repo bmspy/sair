@@ -19,3 +19,5 @@ const UIReducer = (state = initialState, action) => {
 };
 
 export default UIReducer;
+
+// Developed by Mustafa Alabadla

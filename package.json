@@ -21,6 +21,7 @@
     "react": "17.0.2",
     "react-native": "0.66.1",
     "react-native-app-intro-slider": "^4.0.4",
+    "react-native-bootsplash": "^4.0.2",
     "react-native-calendars": "^1.1269.0",
     "react-native-config": "^1.4.5",
     "react-native-dashed-line": "^1.1.0",
@@ -39,6 +40,7 @@
     "react-native-screens": "^3.8.0",
     "react-native-scroll-picker-wheel": "^1.0.2",
     "react-native-select-dropdown": "^1.2.0",
+    "react-native-share": "^7.3.2",
     "react-native-svg": "^12.1.1",
     "react-native-tab-view": "^3.1.1",
     "react-native-vector-icons": "^9.0.0",
@@ -48,7 +50,8 @@
     "redux-thunk": "^2.4.1",
     "styled-components": "^5.3.3",
     "styled-system": "^5.1.5",
-    "toggle-switch-react-native": "^3.3.0"
+    "toggle-switch-react-native": "^3.3.0",
+    "use-force-update": "^1.0.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

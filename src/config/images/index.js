@@ -23,4 +23,8 @@ export default{
     female_active:require('./female_active.png'),
     male_active:require('./male_active.png'),
     section_active:require('./section_active.png'),
+    school_new:require('./school_new.png'),
+    directorate_new:require('./directorate_new.png'),
+    logo:require('./logo.png'),
+    ibrahim:require('./ibrahim.png'),
 }

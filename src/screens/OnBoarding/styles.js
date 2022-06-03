@@ -24,9 +24,10 @@ export default StyleSheet.create({
         color:colors.white,
         ...commonStyle.RegularFont,
         marginHorizontal:'5%',
-        textAlign:'justify',
+        textAlign:'center',
         alignSelf:'center',
-        fontSize:16
+        fontSize:16,
+        lineHeight: 25,
     },
     img:{
         alignSelf:'center',

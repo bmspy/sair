@@ -72,11 +72,15 @@ export default StyleSheet.create({
         color:colors.dimGray,
     },
     date:{
-        ...commonStyle.LightFont,
+        ...commonStyle.RegularFont,
         fontSize:13,
         color:colors.black,
-        height:85,
-        marginHorizontal:'5%'
+        // height:85,
+        textAlign: 'left',
+        lineHeight: 20,
+        paddingHorizontal: 25,
+        
+        // marginHorizontal:'5%'
     },
     searchView:{
         width:'90%',

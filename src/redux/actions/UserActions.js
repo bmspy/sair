@@ -104,7 +104,17 @@ export const postLogin = (formData, navigateToTarget, toast) => {
         dispatch(setToken('have_plan', JSON.stringify(res.data.have_plan))); // SAVE HAVE PLANS
         // deviceStorage.saveItem('id_token', res.data.token);
         dispatch(setProfile(res.data.Profile));
-        navigateToTarget('HowWillGo');
+        if (res.data.Profile.user_type === 'supervisor') {
+          navigateToTarget('HowWillGo');
+        } else if (res.data.Profile.user_type === 'head_of_department') {
+          navigateToTarget('HeadHome');
+        } else if (res.data.Profile.user_type === 'director_of_service') {
+          navigateToTarget('ManagerHome');
+        } else if (res.data.Profile.user_type === 'driver') {
+          navigateToTarget('DriverHome');
+        } else {
+          alert('حصل خطأ أثناء عملية تسجيل الدخول ، الرجاء التأكد من البيانات');
+        }
         //GET TOKEN
         // dispatch(getToken()).then(token => {
         //   console.log('token: ', token);
@@ -254,10 +264,11 @@ export const putEditProfile = (formData, navigateToTarget, toast) => {
           const profile = getState().user.profile;
           profile.full_name = res.data.data.full_name;
           profile.email = res.data.data.email;
-          profile.mobile = res.data.data.full_namobileme;
-          profile.image = formData.image;
+          profile.mobile = res.data.data.mobile;
+          profile.image = res.data.data.image;
           console.log(profile);
           dispatch(setProfile(profile));
+          // dispatch(setProfile(res.data.data));
           console.log('data', res.data);
           navigateToTarget('Profile');
           toast.show({
@@ -305,7 +316,17 @@ export const getProfile = (token, navigateToTarget) => {
         // dispatch(uiStopLoading());
         // console.log(res.data);
         dispatch(setProfile(res.data));
-        navigateToTarget('HowWillGo');
+        if (res.data.user_type === 'supervisor') {
+          navigateToTarget('HowWillGo');
+        } else if (res.data.user_type === 'head_of_department') {
+          navigateToTarget('HeadHome');
+        } else if (res.data.user_type === 'director_of_service') {
+          navigateToTarget('ManagerHome');
+        } else if (res.data.user_type === 'driver') {
+          navigateToTarget('DriverHome');
+        } else {
+          navigateToTarget('SignIn');
+        }
         // toast.show({
         //   description: 'تم تعديل البيانات بنجاح',
         // });

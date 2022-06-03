@@ -32,9 +32,9 @@ import {
 } from 'react-native-responsive-screen';
 import ScrollPicker from 'react-native-scroll-picker-wheel';
 import AsyncStorage from '@react-native-community/async-storage';
-import axios  from 'axios';
+import axios from 'axios';
 import {connect} from 'react-redux';
-import {postPlanDone} from '../../redux/actions/Index';
+import {postPlanDone, setPlanDoneModal} from '../../redux/actions/Index';
 import {API_URL} from '@env';
 
 
@@ -72,7 +72,7 @@ const ChooseSchool = props => {
     formData.append('new_destination_type', props.placeData.new_destination_type);
     formData.append('new_destination_id', newDestination);
     console.log(formData);
-    props.onPostPlanDone(formData, toast);
+    props.onPostPlanDone(formData, toast, props.placeData.done);
     // const token = await AsyncStorage.getItem('id_token');
     // const response = await axios.post(
     //   'http://sair.ghaith.om/post/plan/done/',
@@ -161,7 +161,7 @@ const ChooseSchool = props => {
         <Text style={styles.loginBtn}> اختيار </Text>
       </Pressable>
 
-      <Modal isOpen={props.planDoneModal} onClose={() => props.setPlanDoneModal(false)}>
+      <Modal isOpen={props.planDoneModal}>
         <Modal.Content maxWidth="400px" paddingY={7}>
           <VStack space={2}>
             <Text
@@ -187,7 +187,7 @@ const ChooseSchool = props => {
               {/* Button */}
               <Pressable
                 onPress={() => {
-                  props.setPlanDoneModal(false);
+                  props.onSetPlanDoneModal(false);
                   navigation.navigate('Home');
                 }}
                 style={[styles.btn, {width: '70%', marginVertical: '5%'}]}>
@@ -214,7 +214,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onPostPlanDone: (formData, toast) => dispatch(postPlanDone(formData, toast)),
+  onPostPlanDone: (formData, toast, done) => dispatch(postPlanDone(formData, toast, done)),
+  onSetPlanDoneModal: (flag) => dispatch(setPlanDoneModal(flag)),
   // onSetNoteDate: date => dispatch(setNoteDate(date)),
 });
 

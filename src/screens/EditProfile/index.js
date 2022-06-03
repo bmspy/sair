@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -70,16 +70,28 @@ const EditProfile = props => {
     const formData = new FormData();
 
     formData.append('email', email);
-    formData.append('mobile', mobile);
+    if (props.profile?.user_type === 'driver') {
+      formData.append('mobile_for_call', mobile);
+    } else {
+      formData.append('mobile', mobile);
+    }
     formData.append('full_name', fullName);
     formData.append('image', imageFile);
     const regToast = toast;
     if (image?.path) {
-      props.onPutEditProfile(formData, navigation.navigate, regToast);
+      if (email !== '' && fullName !== '') {
+        props.onPutEditProfile(formData, navigation.navigate, regToast);
+      } else {
+        alert('الرجاء ادخال جميع البيانات');
+      }
     } else {
-      alert('الرجاء إضافة صورة الملف الشخصي')
+      alert('الرجاء إضافة صورة الملف الشخصي');
     }
   };
+
+  useEffect(() => {
+    console.log(props.profile.image);
+  }, [])
 
   return (
     <SafeAreaView

@@ -76,6 +76,7 @@ import com.android.build.OutputFile
  *   // supply additional arguments to the packager
  *   extraPackagerArgs: []
  * ]
+ * Developed by Mustafa Alabadla
  */
 
 project.ext.react = [
@@ -132,14 +133,14 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.sayer"
+        applicationId "com.ghaith.sayer"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "1.0.4"
         vectorDrawables.useSupportLibrary = true // For Image Picker
         // manifestPlaceholders = [API_KEY: "$process.env.API_GOOGLE"]
-        resValue "string", "build_config_package", "com.sayer"
+        resValue "string", "build_config_package", "com.ghaith.sayer"
         // applicationId project.env.get("API_GOOGLE")
     }
     splits {
@@ -204,6 +205,8 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
+    implementation "androidx.core:core-splashscreen:1.0.0-alpha02" // Add this line
+
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
@@ -229,6 +232,7 @@ dependencies {
 }
 
 // Run this once to be able to run the application with BUCK
+// Developed by Mustafa Alabadla
 // puts all compile dependencies into folder libs for BUCK to use
 task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.implementation

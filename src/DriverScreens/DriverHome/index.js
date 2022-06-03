@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,8 @@ import {
   ImageBackground,
   SafeAreaView,
   StatusBar,
+  Alert,
+  BackHandler,
 } from 'react-native';
 import {colors, images} from '../../config';
 import styles from './styles';
@@ -24,10 +26,11 @@ import {
   Box,
   Avatar,
   useToast,
+  Radio,
 } from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
-import {putEditProfile} from '../../redux/actions/Index';
+import {setSelectedDate, setMonthPlanId} from '../../redux/actions/Index';
 import {
   format,
   subDays,
@@ -57,6 +60,7 @@ import {
   dotColors,
 } from '../../services/calendar';
 import {API_URL} from '@env';
+import {useFocusEffect} from '@react-navigation/native';
 
 const DriverHome = props => {
   const navigation = useNavigation();
@@ -64,6 +68,10 @@ const DriverHome = props => {
   const [search, setSearch] = useState('');
   const [monthIndex, setMonthIndex] = useState(0);
   const [index, setIndex] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [schools, setSchools] = useState([]);
+  const [schoolId, setSchoolId] = useState(null);
 
   //CALENDAR
   const [selectedDay, setSelectedDay] = useState(
@@ -89,44 +97,98 @@ const DriverHome = props => {
   LocaleConfig.locales.ar = arabicMonths;
   LocaleConfig.defaultLocale = 'ar';
 
-  // GET DAYSOFF
+  useFocusEffect(
+    useCallback(() => {
+      const handleBack = () => {
+        Alert.alert(
+          'الخروج من التطبيق',
+          'هل تريد بالتأكيد الخروج من التطبيق؟',
+          [
+            {
+              text: 'إلغاء',
+              style: 'cancel',
+            },
+            {
+              text: 'تأكيد الخروج',
+              onPress: () => BackHandler.exitApp(),
+            },
+          ],
+        );
+
+        return true;
+      };
+
+      const unsubscribe = BackHandler.addEventListener(
+        'hardwareBackPress',
+        handleBack,
+      );
+
+      return () => unsubscribe.remove();
+    }, []),
+  );
+
   useEffect(() => {
-    // console.log(props.plan.destination);
-    const getDaysoff = async () => {
+    setIsLoading(true);
+    const getPlanDetails = async () => {
       const token = await AsyncStorage.getItem('id_token');
-      const response = await axios.get(
-        `${API_URL}get/month/daysoff/`,
-        {
+      try {
+        const response = await axios.get(`${API_URL}get/driver/day/plan/`, {
           params: {
-            month: currentMonth,
-            year: currentYear,
+            date: selectedDay,
           },
           headers: {
             Authorization: `Token ${token}`,
           },
-        },
-      );
-      console.log(response.data.map(item => item.date));
-      setDaysoff(response.data.map(item => item.date));
-
-      response.data
-        .map(item => item.date)
-        .forEach(item => {
-          setPreviousDays(prev => {
-            return {
-              ...prev,
-              [item]: {
-                disabled: true,
-                disableTouchEvent: true,
-                dots: [holiday1, holiday2],
-              },
-            };
-          });
         });
+        setIsLoading(false);
+        setSchools(response.data.destinations);
+        console.log(response.data.destinations);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
-    getDaysoff();
-  }, [currentMonth, currentYear]);
+    getPlanDetails();
+  }, [selectedDay]);
+
+  // GET DAYSOFF
+  // useEffect(() => {
+  //   // console.log(props.plan.destination);
+  //   const getDaysoff = async () => {
+  //     const token = await AsyncStorage.getItem('id_token');
+  //     const response = await axios.get(
+  //       `${API_URL}get/month/daysoff/`,
+  //       {
+  //         params: {
+  //           month: currentMonth,
+  //           year: currentYear,
+  //         },
+  //         headers: {
+  //           Authorization: `Token ${token}`,
+  //         },
+  //       },
+  //     );
+  //     console.log(response.data.map(item => item.date));
+  //     setDaysoff(response.data.map(item => item.date));
+
+  //     response.data
+  //       .map(item => item.date)
+  //       .forEach(item => {
+  //         setPreviousDays(prev => {
+  //           return {
+  //             ...prev,
+  //             [item]: {
+  //               disabled: true,
+  //               disableTouchEvent: true,
+  //               dots: [holiday1, holiday2],
+  //             },
+  //           };
+  //         });
+  //       });
+  //   };
+
+  //   getDaysoff();
+  // }, [currentMonth, currentYear]);
 
   // HANDLE SELECTED DAY
   const handleSelectDate = date => {
@@ -136,31 +198,60 @@ const DriverHome = props => {
     console.log(date.dateString);
   };
 
-  const renderMonths = ({item}) => (
-    <Pressable
-      onPress={() => setMonthIndex(item.id - 1)}
-      style={{
-        width: wp('15%'),
-        height: wp('20%'),
-        backgroundColor:
-          item.id - 1 === monthIndex ? colors.primary : colors.white,
-        marginHorizontal: 5,
-        borderRadius: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-      <Text
-        style={[
-          styles.address3,
-          {
-            color: item.id - 1 === monthIndex ? colors.white : colors.primary,
-            fontSize: 12,
-          },
-        ]}>
+  // const renderMonths = ({item}) => (
+  //   <Pressable
+  //     onPress={() => setMonthIndex(item.id - 1)}
+  //     style={{
+  //       width: wp('15%'),
+  //       height: wp('20%'),
+  //       backgroundColor:
+  //         item.id - 1 === monthIndex ? colors.primary : colors.white,
+  //       marginHorizontal: 5,
+  //       borderRadius: 10,
+  //       alignItems: 'center',
+  //       justifyContent: 'center',
+  //     }}>
+  //     <Text
+  //       style={[
+  //         styles.address3,
+  //         {
+  //           color: item.id - 1 === monthIndex ? colors.white : colors.primary,
+  //           fontSize: 12,
+  //         },
+  //       ]}>
+  //       {item.name}
+  //     </Text>
+  //   </Pressable>
+  // );
+
+  const renderSchools = ({item}) =>
+    item?.name ? (
+      <Radio style={{alignSelf: 'flex-start'}} value={item.id} my={1}>
         {item.name}
-      </Text>
-    </Pressable>
-  );
+      </Radio>
+    ) : null;
+
+  const handleConfirmSchool = () => {
+    if (schoolId) {
+      setShowModal(false);
+      props.onSetSelectedDate(selectedDay);
+      props.onSetMonthPlanId(schoolId);
+      navigation.navigate('DriverDetails');
+    } else {
+      alert('الرجاء اختيار مدرسة');
+    }
+  };
+
+  const handleDayPlan = () => {
+    if (schools?.length) {
+      setShowModal(true);
+      console.log(selectedDay);
+    } else {
+      alert('لا يوجد خطة في هذا اليوم');
+    }
+    // props.onSetSelectedDate(selectedDay);
+    // navigation.navigate('DriverDetails');
+  };
 
   return (
     <SafeAreaView
@@ -187,13 +278,17 @@ const DriverHome = props => {
         //   //   iconStyle: {color: '#000'},
         // }}
         centerComponent={{
-          text: 'مرحبا محمد العبري',
+          text: `مرحبا ${props.profile.full_name}`,
           style: [
             {color: '#000', fontSize: 20, fontWeight: 'bold'},
             styles.address,
           ],
         }}
-        rightComponent={<Avatar source={images.avatar_new} size="sm" />}
+        rightComponent={
+          <Pressable onPress={() => navigation.navigate('Profile')}>
+            <Avatar source={{uri: props.profile.image}} size="sm" />
+          </Pressable>
+        }
       />
       <VStack
         style={{
@@ -215,7 +310,7 @@ const DriverHome = props => {
             اليوم:
           </Text>
           <Text style={[styles.address3, {marginHorizontal: null}]}>
-            {format(new Date(), 'eeee  dd MMM yyyy', {locale: ar})}
+            {format(new Date(selectedDay), 'eeee  dd MMM yyyy', {locale: ar})}
           </Text>
         </HStack>
         <HStack>
@@ -226,8 +321,10 @@ const DriverHome = props => {
             ]}>
             خطتك اليوم:
           </Text>
-          <Text style={[styles.address3, {marginHorizontal: null}]}>
-            مدرسة الطلائع
+          <Text
+            numberOfLines={1}
+            style={[styles.address3, {marginHorizontal: null, width: '65%'}]}>
+            {schools?.length ? schools[0]?.name : 'لا يوجد'}
           </Text>
         </HStack>
       </VStack>
@@ -278,17 +375,17 @@ const DriverHome = props => {
               marked: true,
               selectedColor: colors.primary,
             },
-            '2021-12-13': {
-              dots: [schools1, schools2],
-              selected: selectedDay === '2021-12-13' ? true : false,
-              // marked: true,
-              selectedColor: '#7F05A3',
-            },
-            '2021-12-22': {
-              dots: [schools1, schools2],
-              selected: selectedDay === '2021-12-22' ? true : false,
-              selectedColor: '#7F05A3',
-            },
+            // '2021-12-13': {
+            //   dots: [schools1, schools2],
+            //   selected: selectedDay === '2021-12-13' ? true : false,
+            //   // marked: true,
+            //   selectedColor: '#7F05A3',
+            // },
+            // '2021-12-22': {
+            //   dots: [schools1, schools2],
+            //   selected: selectedDay === '2021-12-22' ? true : false,
+            //   selectedColor: '#7F05A3',
+            // },
             // '2021-12-22': {dots: [holiday, holiday]},
             ...previousDays,
           }}
@@ -300,9 +397,50 @@ const DriverHome = props => {
           style={{borderRadius: 7, width: '90%', alignSelf: 'center'}}
         />
       </View>
-      <Pressable onPress={() => navigation.navigate('DriverDetails')} style={[styles.btn]}>
-        <Text style={styles.loginBtn}> عرض الخطة </Text>
+      <Pressable onPress={handleDayPlan} style={[styles.btn]}>
+        <Text style={styles.loginBtn}> خطة اليوم </Text>
       </Pressable>
+
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <Modal.Content maxWidth="400px">
+          <Modal.CloseButton />
+          <Modal.Header style={{alignItems: 'center'}}>
+            اختر المدرسة
+          </Modal.Header>
+          <Modal.Body>
+            <Radio.Group
+              style={{paddingHorizontal: '10%'}}
+              name="myRadioGroup"
+              accessibilityLabel="change place"
+              // defaultValue={schools?.length ? schools[0]?.id : '0'}
+              value={schoolId}
+              onChange={nextValue => {
+                setSchoolId(nextValue);
+                // setChangeType(nextValue.type);
+                // console.log(nextValue);
+              }}>
+              <FlatList
+                data={schools}
+                keyExtractor={item => item.id}
+                renderItem={renderSchools}
+              />
+              {/* {selectedChangePlan?.destination_list?.forEach(item => (
+                <Radio value={item.destination_details?.name} my={1}>
+                  {item.destination_details?.name}
+                </Radio>
+              ))} */}
+              {/* <Radio value="مدرسة المجد" my={1}>
+                مدرسة المجد
+              </Radio> */}
+            </Radio.Group>
+            <Pressable
+              onPress={handleConfirmSchool}
+              style={[styles.btn, {width: 220, marginTop: '5%'}]}>
+              <Text style={styles.loginBtn}> اختيار</Text>
+            </Pressable>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -313,7 +451,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // onPutEditProfile: (formData, navigateToTarget, regToast) => dispatch(putEditProfile(formData, navigateToTarget, regToast)),
+  onSetSelectedDate: selectedDate => dispatch(setSelectedDate(selectedDate)),
+  onSetMonthPlanId: id => dispatch(setMonthPlanId(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DriverHome);

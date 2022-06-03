@@ -36,6 +36,8 @@ import {
   uiStopLoading,
   postPlanDone,
   setNewPlace,
+  setPlanDetailsDate,
+  setPlan,
 } from '../../redux/actions/Index';
 import {API_URL} from '@env';
 
@@ -58,7 +60,7 @@ const Home = props => {
   const [selectedMonth, setSelectedMonth] = useState(format(new Date(), 'MM'));
   const [selectedYear, setSelectedYear] = useState(format(new Date(), 'yyyy'));
   const [months, setMonths] = useState([]);
-  const [firstTime, setFirstTime] = useState(false);
+  // const [firstTime, setFirstTime] = useState(false);
   const [noPlans, setNoPlans] = useState(false);
   const [homeContent, setHomeContent] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -124,16 +126,34 @@ const Home = props => {
         },
       });
       console.log(response.data.results);
-      if (response.data.count === 0) {
+      if (!response.data.plans.length) {
         setIsLoading(false);
         setNoPlans(true);
       } else {
         setIsLoading(false);
         setNoPlans(false);
-        setHomeContent(response.data.results);
+        setHomeContent(response.data);
       }
     };
     getHomePage();
+  }, [selectedMonth, props.reload]);
+
+  // GET SCHOOL STATES
+  useEffect(() => {
+    // GET STATE SCHOOL
+    const getStateSchool = async () => {
+      const token = await AsyncStorage.getItem('id_token');
+      const response = await axios.get(`${API_URL}get/state/schools/`, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      setStateSchool(response.data);
+      setDestinationList(response.data.places);
+      // console.log(response.data);
+    };
+
+    getStateSchool();
 
     // GET MONTHS THIS YEAR
     const monthsText = [
@@ -154,28 +174,8 @@ const Home = props => {
     for (let x in monthsText) {
       newMonths.push(monthsText[x] + ' ' + selectedYear);
     }
+    newMonths.push('يناير' + ' ' + (Number(format(new Date(), 'yyyy')) + 1)); // One Additional Month
     setMonths(newMonths);
-  }, [selectedMonth, props.reload]);
-
-  // GET SCHOOL STATES
-  useEffect(() => {
-    // GET STATE SCHOOL
-    const getStateSchool = async () => {
-      const token = await AsyncStorage.getItem('id_token');
-      const response = await axios.get(
-        `${API_URL}get/state/schools/`,
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        },
-      );
-      setStateSchool(response.data);
-      setDestinationList(response.data.places);
-      // console.log(response.data);
-    };
-
-    getStateSchool();
   }, []);
 
   const createPDF = async () => {
@@ -212,7 +212,8 @@ const Home = props => {
     const formData = new FormData();
     formData.append('destination', destination);
     formData.append('done', done);
-    props.onPostPlanDone(formData, toast);
+    // console.log(formData.done);
+    props.onPostPlanDone(formData, toast, done);
     // const token = await AsyncStorage.getItem('id_token');
     // const response = await axios.post(
     //   'http://sair.ghaith.om/post/plan/done/',
@@ -239,7 +240,55 @@ const Home = props => {
     };
     props.onSetNewPlace(placeData);
     navigation.navigate('ChooseSchool');
-  }
+  };
+
+  // HANDLE EXPORT PLAN
+  const handleExportPlan = () => {
+    if (homeContent?.plans.length) {
+      const planDetailsDate = {
+        // planDetailsMonth: selectedMonth,
+        // planDetailsYear: selectedYear,
+        planDetailsMonth: `${selectedMonth}`
+          .replace(/^(\d)$/, '0$1')
+          .toString(),
+        planDetailsYear: selectedYear.toString(),
+      };
+      props.onSetPlanDetailsDate(planDetailsDate);
+      navigation.navigate('ExportPlan');
+    } else {
+      alert('لا يوجد أي خطة في هذا الشهر');
+    }
+  };
+
+  // HANDLE EDIT PLAN
+  const handleEditPlan = () => {
+    if (homeContent?.plans.length) {
+      const planDetailsDate = {
+        planDetailsMonth: `${selectedMonth}`
+          .replace(/^(\d)$/, '0$1')
+          .toString(),
+        planDetailsYear: selectedYear.toString(),
+      };
+      props.onSetPlanDetailsDate(planDetailsDate);
+      navigation.navigate('EditPlane');
+    } else {
+      alert('الخطة غير مكتملة');
+    }
+  };
+
+  const handleSetPlan = plan => {
+    // console.log(plan.destinations[0].destination_details.latitude);
+    try {
+      if (plan.destination?.destination_details?.latitude) {
+        props.onSetPlan(plan);
+        navigation.navigate('SchoolLocation');
+      } else {
+        alert('لقد تعذر تحديد موقع هذه المدرسة');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // RENDER SCHOOL STATES FOR FLATLIST
   const renderStates = ({item}) => (
@@ -276,7 +325,7 @@ const Home = props => {
     // </VStack>
     <VStack space={2} alignItems="center" style={{marginHorizontal: 5}}>
       <FAB
-        size='small'
+        size="small"
         icon={<Image style={styles.img} source={images.awesome_school} />}
         color="#9FD49D"
         onPress={() => {
@@ -285,10 +334,10 @@ const Home = props => {
           setDestinationList(item.schools);
         }}
         style={{
-                borderWidth: locationIndex === item.id ? 2 : 0,
-                borderColor: colors.primary,
-                borderRadius: wp('50%'),
-              }}
+          borderWidth: locationIndex === item.id ? 2 : 0,
+          borderColor: colors.primary,
+          borderRadius: wp('50%'),
+        }}
       />
       <Text style={{color: '#000'}}>{item.name}</Text>
     </VStack>
@@ -387,11 +436,11 @@ const Home = props => {
                       fontSize: 14,
                     },
                   ]}>
-                  {item.destinations[0]?.destination_details?.name || 'لا يوجد'}
+                  {item?.destination?.destination_details?.name || 'لا يوجد'}
                 </Text>
               </HStack>
               <Pressable
-                onPress={() => navigation.navigate('SchoolLocation')}
+                onPress={() => handleSetPlan(item)}
                 style={{
                   backgroundColor: colors.white,
                   padding: 3,
@@ -413,11 +462,12 @@ const Home = props => {
                 />
               </Pressable>
             </HStack>
-            {item.destinations[0]?.can_confirm ? (
+            {item?.destination?.can_confirm &&
+            item?.destination?.is_done?.status === 0 ? (
               <HStack alignItems="center" justifyContent="space-between">
                 <HStack alignItems="center">
                   <Pressable
-                    onPress={() => handlePlanDone(item.destinations[0].id, 1)}
+                    onPress={() => handlePlanDone(item?.destination?.id, 1)}
                     style={styles.icons}>
                     <Icon
                       name={'check'}
@@ -443,7 +493,7 @@ const Home = props => {
                   <Pressable
                     style={styles.icons}
                     onPress={() => {
-                      setOldDestinationId(item.destinations[0].id);
+                      setOldDestinationId(item?.destination?.id);
                       setShowModal(true);
                     }}>
                     <Icon
@@ -467,7 +517,8 @@ const Home = props => {
                   </Text>
                 </HStack>
               </HStack>
-            ) : (
+            ) : item?.destination?.can_confirm &&
+              item?.destination?.is_done?.status === 1 ? (
               <HStack>
                 <Icon
                   name={'check'}
@@ -485,10 +536,33 @@ const Home = props => {
                       fontSize: 14,
                     },
                   ]}>
-                  {item.destinations[0]?.destination_details?.name || 'لا يوجد'}
+                  {item?.destination?.destination_details?.name || 'لا يوجد'}
                 </Text>
               </HStack>
-            )}
+            ) : item?.destination?.can_confirm &&
+              item?.destination?.is_done?.status === 2 ? (
+              <HStack>
+                <Icon
+                  name={'check'}
+                  type={'material'}
+                  color={colors.primary}
+                  size={15}
+                />
+                <Text
+                  style={[
+                    styles.loginBtn,
+                    {
+                      color: colors.dimGray,
+                      marginHorizontal: 5,
+                      fontWeight: 'normal',
+                      fontSize: 14,
+                    },
+                  ]}>
+                  {item?.destination?.is_done?.alternate_destination
+                    ?.destination_details?.name || 'لا يوجد'}
+                </Text>
+              </HStack>
+            ) : null}
           </VStack>
         </VStack>
         {/* LEFT SIDE FINISH */}
@@ -537,7 +611,7 @@ const Home = props => {
             ],
           }}
           rightComponent={
-            <Pressable onPress={() => console.log(props.profile)}>
+            <Pressable onPress={() => navigation.navigate('Profile')}>
               <Avatar
                 bg="cyan.500"
                 // alignSelf="center"
@@ -573,8 +647,8 @@ const Home = props => {
               ادخال خطة جديدة
             </Text>
           </HStack>
-          {!firstTime ? (
-            <Pressable onPress={() => navigation.navigate('EditPlane')}>
+          {homeContent?.approved_request || homeContent?.approved ? null : (
+            <Pressable onPress={handleEditPlan}>
               <Box
                 padding={2}
                 style={{
@@ -589,84 +663,90 @@ const Home = props => {
                 />
               </Box>
             </Pressable>
-          ) : null}
+          )}
         </HStack>
       </VStack>
 
       {/* MAIN BODY START */}
-      {!firstTime ? (
-        <VStack flex={1} marginTop={3}>
-          <HStack
-            marginTop={1}
-            marginBottom={5}
-            style={{backgroundColor: 'transparent', alignSelf: 'center'}}>
-            <View style={styles.sideHeader}>
-              <Pressable style={styles.plusView1} onPress={createPDF}>
-                <Icon
-                  name={'file-pdf'}
-                  type={'material-community'}
-                  color={colors.white}
-                  size={20}
-                />
-              </Pressable>
-              <View>
-                <Text style={[styles.address, {color: colors.primary}]}>
-                  خطتك لهذا الشهر
-                </Text>
-              </View>
-            </View>
-            <View style={styles.superVisorHeader3}>
-              <SelectDropdown
-                data={months}
-                defaultButtonText={format(new Date(), 'MMM yyyy', {locale: ar})}
-                buttonTextStyle={{fontSize: 15}}
-                dropdownIconPosition="right"
-                renderDropdownIcon={() => (
-                  <Icon name="keyboard-arrow-down" type="material" />
-                )}
-                buttonStyle={{
-                  width: 140,
-                  backgroundColor: colors.lightGrey,
-                  borderRadius: 8,
-                  height: 40,
-                }}
-                onSelect={(selectedItem, index) => {
-                  // console.log(selectedItem, index);
-                  setSelectedMonth(index + 1);
-                  console.log(index + 1, selectedYear);
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                  // text represented after item is selected
-                  // if data array is an array of objects then return selectedItem.property to render after item is selected
-                  return selectedItem;
-                }}
-                rowTextForSelection={(item, index) => {
-                  // text represented for each item in dropdown
-                  // if data array is an array of objects then return item.property to represent item in dropdown
-                  return item;
-                }}
+      <VStack flex={1} marginTop={3}>
+        <HStack
+          marginTop={1}
+          marginBottom={5}
+          style={{backgroundColor: 'transparent', alignSelf: 'center'}}>
+          <View style={styles.sideHeader}>
+            <Pressable style={styles.plusView1} onPress={handleExportPlan}>
+              {/* <Pressable style={styles.plusView1} onPress={createPDF}> */}
+              <Icon
+                name={'file-pdf'}
+                type={'material-community'}
+                color={colors.white}
+                size={20}
               />
-            </View>
-          </HStack>
-
-          {isLoading ? (
-            <Spinner style={{alignSelf: 'center', flex: 1}} size="lg" />
-          ) : noPlans ? (
-            <VStack
-              style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+            </Pressable>
+            <View>
               <Text style={[styles.address, {color: colors.primary}]}>
-                لا يوجد أي خطة في هذا الشهر
+                خطتك لهذا الشهر
               </Text>
-            </VStack>
-          ) : (
-            <FlatList
-              data={homeContent}
-              // keyExtractor={item => item.id}
-              renderItem={renderItem}
+            </View>
+          </View>
+          <View style={styles.superVisorHeader3}>
+            <SelectDropdown
+              data={months}
+              defaultButtonText={format(new Date(), 'MMM yyyy', {locale: ar})}
+              buttonTextStyle={{fontSize: 15}}
+              dropdownIconPosition="right"
+              renderDropdownIcon={() => (
+                <Icon name="keyboard-arrow-down" type="material" />
+              )}
+              buttonStyle={{
+                width: 140,
+                backgroundColor: colors.lightGrey,
+                borderRadius: 8,
+                height: 40,
+              }}
+              onSelect={(selectedItem, index) => {
+                // console.log(selectedItem, index);
+                if (index + 1 === 13) {
+                  setSelectedMonth(1);
+                  setSelectedYear(Number(format(new Date(), 'yyyy')) + 1);
+                } else {
+                  setSelectedMonth(index + 1);
+                  setSelectedYear(format(new Date(), 'yyyy'));
+                }
+                // console.log(index + 1, selectedYear);
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                // text represented after item is selected
+                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                // text represented for each item in dropdown
+                // if data array is an array of objects then return item.property to represent item in dropdown
+                return item;
+              }}
             />
-          )}
+          </View>
+        </HStack>
 
-          {/* {noPlans ? (
+        {isLoading ? (
+          <Spinner style={{alignSelf: 'center', flex: 1}} size="lg" />
+        ) : noPlans ? (
+          <VStack
+            style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+            <Text style={[styles.address, {color: colors.primary}]}>
+              لا يوجد أي خطة في هذا الشهر
+            </Text>
+          </VStack>
+        ) : (
+          <FlatList
+            data={homeContent?.plans}
+            // keyExtractor={item => item.id}
+            renderItem={renderItem}
+          />
+        )}
+
+        {/* {noPlans ? (
             <VStack
               style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
               <Text style={[styles.address, {color: colors.primary}]}>
@@ -680,28 +760,7 @@ const Home = props => {
               renderItem={renderItem}
             />
           )} */}
-        </VStack>
-      ) : (
-        <VStack
-          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Image style={styles.img} source={images.empty_home} />
-          <Text
-            style={[
-              styles.address,
-              {
-                color: colors.black,
-                width: '70%',
-                textAlign: 'center',
-                marginTop: hp('10%'),
-              },
-            ]}>
-            يرجى ادخال خطتك لتتمكن من عرضها او التعديل عليها
-          </Text>
-          <Pressable onPress={() => alert('ds')} style={styles.btn}>
-            <Text style={styles.loginBtn}> ادخال خطة جديدة</Text>
-          </Pressable>
-        </VStack>
-      )}
+      </VStack>
 
       {/* MAIN BODY FINISH */}
 
@@ -883,11 +942,17 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onSetNoteDate: date => dispatch(setNoteDate(date)),
-  onPostPlanDone: (formData, toast) => dispatch(postPlanDone(formData, toast)),
-  onSetNewPlace: (data) => dispatch(setNewPlace(data)),
+  onPostPlanDone: (formData, toast, done) =>
+    dispatch(postPlanDone(formData, toast, done)),
+  onSetNewPlace: data => dispatch(setNewPlace(data)),
   onUiStartLoading: () => dispatch(uiStartLoading()),
   onUiStopLoading: () => dispatch(uiStopLoading()),
+  onSetPlanDetailsDate: planDetailsDate =>
+    dispatch(setPlanDetailsDate(planDetailsDate)),
+  onSetPlan: plan => dispatch(setPlan(plan)),
   // onPostLogin: (loginData, navigateToTarget, toast) => dispatch(postLogin(loginData, navigateToTarget, toast)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
+
+// Developed by Mustafa Alabadla

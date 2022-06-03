@@ -24,6 +24,7 @@ import {
   Box,
   Avatar,
   Button,
+  Spinner,
 } from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
@@ -39,22 +40,27 @@ const Notes = props => {
   const navigation = useNavigation();
 
   const [search, setSearch] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
   const [notes, setNotes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const getNotes = async () => {
+      setIsLoading(true);
       const token = await AsyncStorage.getItem('id_token');
-
       try {
         const resp = await axios.get(`${API_URL}get/notes/`, {
           headers: {
             Authorization: `Token ${token}`,
           },
         });
-        setNotes(resp.data.results);
-        console.log(resp.data.results);
+        setNotes(resp.data);
+        // console.log(resp.data);
+        setIsLoading(false);
       } catch (err) {
         // Handle Error Here
+        setIsLoading(false);
         console.error(err);
       }
 
@@ -112,13 +118,38 @@ const Notes = props => {
     // };
 
     getNotes();
-  }, []);
+  }, [reload]);
+
+  const handleSearch = () => {
+    // notes.filter(note => {
+    // });
+    //SEARCH CODE
+    try {
+      if (search !== '') {
+        setIsSearching(true);
+        let searchResult = [];
+        for (let key in notes) {
+          //console.log(parsedRes[key].address);
+          let noteTitle = notes[key].title.toLowerCase();
+          let noteContent = notes[key].content.toLowerCase();
+          if ((noteTitle.includes(search.toLowerCase()) || noteContent.includes(search.toLowerCase())) && search.trim() !== '') {
+            searchResult.push(notes[key]);
+          }
+        }
+        console.log(searchResult);
+        setNotes(searchResult);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    
+  };
 
   const handleSetNote = async note => {
     await props.onSetNote(note);
     console.log(note);
     navigation.navigate('ShowNote');
-  }
+  };
 
   const renderItem = ({item}) => (
     <Pressable
@@ -127,22 +158,22 @@ const Notes = props => {
         styles.consultantView,
         {
           backgroundColor:
-            item.index == 0
+            item?.id === notes[0]?.id && !isSearching
               ? '#E4F6E3'
-              : item.index == 1
+              : item?.id === notes[1]?.id && !isSearching
               ? '#F9EEEB'
               : colors.white,
         },
       ]}>
-      {item.index == 0 || item.index == 1 ? (
+      {(item?.id === notes[0]?.id || item?.id === notes[1]?.id) && !isSearching ? (
         <Text
           style={[
             styles.new,
             {
               backgroundColor:
-                item.index == 0
+                item?.id === notes[0]?.id
                   ? '#E4F6E3'
-                  : item.index == 1
+                  : item?.id === notes[1]?.id
                   ? '#F9EEEB'
                   : colors.white,
               //   color:item.index == 0 ?'#E4F6E3':item.index == 1?'#F9EEEB':colors.white
@@ -152,8 +183,10 @@ const Notes = props => {
         </Text>
       ) : null}
 
-      <VStack style={{paddingHorizontal: '5%', marginTop: 3}}>
-        <Text style={styles.address}>{format(new Date('2021-12-13'), 'MMM dd, yyyy', {locale: ar})}</Text>
+      <VStack style={{paddingHorizontal: '5%', marginTop: 3, flex: 1}}>
+        <Text style={[styles.address, {fontSize: 13}]}>
+          {format(new Date(item.date), 'dd MMM , yyyy', {locale: ar})}
+        </Text>
         {/* <Text style={styles.address}>أكتوبر 5 , 2021</Text> */}
         <Text style={styles.address}>{item.title}</Text>
         <Text style={styles.date} numberOfLines={7}>
@@ -237,15 +270,32 @@ const Notes = props => {
         }}
         inputContainerStyle={{backgroundColor: '#FFF', borderRadius: 15}}
         inputStyle={{backgroundColor: '#FFF', textAlign: 'right'}}
-        onSubmitEditing={() => alert('Submitted!')}
+        onSubmitEditing={handleSearch}
+        onClear={() => {
+          setReload(!reload);
+          setIsSearching(false);
+        }}
+        
+        // onSubmitEditing={() => alert('Submitted!')}
         // style={{borderWidth: 1}}
       />
-      <FlatList
-        data={notes}
-        numColumns={2}
-        style={{alignSelf: 'center'}}
-        renderItem={renderItem}
-      />
+      {isLoading ? (
+        <Spinner style={{alignSelf: 'center', flex: 1}} size="lg" />
+      ) : !notes.length ? (
+        <Box style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+          <Text style={[styles.address, {color: colors.dimGray}]}>
+            لا يوجد أي ملاحظات
+          </Text>
+        </Box>
+      ) : (
+        <FlatList
+          data={notes}
+          numColumns={2}
+          style={{alignSelf: 'center'}}
+          renderItem={renderItem}
+        />
+      )}
+
       {/* <Pressable
         style={{width: 200, height: 50, backgroundColor: colors.deepSkyBlue}}
         onPress={() => console.log(notes)}
@@ -318,7 +368,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSetNote: (note) => dispatch(setNote(note)),
+  onSetNote: note => dispatch(setNote(note)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Notes);

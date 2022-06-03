@@ -25,13 +25,16 @@ export const postCreateNote = (formData, navigateToTarget, toast) => {
         })
         .then(res => {
           dispatch(uiStopLoading());
-        //   console.log('data', res.data);
-          navigateToTarget('Home');
-          toast.show({
-            description: `تمت إضافة الملاحظة بنجاح`,
-          });
+          console.log('RES: ', res);
+          if (res.status === 201 || res.status === 200) {
+            navigateToTarget('Home');
+            toast.show({
+              description: 'تمت إضافة الملاحظة بنجاح',
+            });
+          }
         })
         .catch(error => {
+          console.log('error: ', error);
           dispatch(uiStopLoading());
           if (error.response) {
             // console.log(error.response.data);

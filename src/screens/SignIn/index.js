@@ -123,12 +123,18 @@ const SignIn = props => {
 
       {/* <Pressable onPress={() => navigation.navigate('ManagerHome')}>
         <Text style={styles.forgetText}>Go to Manager Home</Text>
+      </Pressable> */}
+      
+      {/* <Pressable onPress={() => navigation.navigate('About')}>
+        <Text style={styles.forgetText}>About</Text>
       </Pressable>
-      <Pressable onPress={() => navigation.navigate('HeadHome')}>
-        <Text style={styles.forgetText}>Go to Head Home</Text>
-      </Pressable>
-      <Pressable onPress={() => navigation.navigate('DriverHome')}>
-        <Text style={styles.forgetText}>Go to Driver Home</Text>
+
+      <Pressable onPress={() => navigation.navigate('PrivacyPolicy')}>
+        <Text style={styles.forgetText}>About</Text>
+      </Pressable> */}
+      
+      {/* <Pressable onPress={() => navigation.navigate('ChooseYourSeat')}>
+        <Text style={styles.forgetText}>Go to Seat Screen</Text>
       </Pressable> */}
       {/* <Pressable onPress={() => console.log(API_KEY)}>
         <Text style={styles.forgetText}>Go to OnBoarding</Text>

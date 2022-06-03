@@ -37,3 +37,5 @@ const NoteReducer = (state = initialState, action) => {
   }
 };
 export default NoteReducer;
+
+// Developed by Mustafa Alabadla

@@ -1,39 +1,110 @@
-import React from 'react';
-import { View, Text, Pressable, ScrollView, Image, FlatList } from 'react-native';
-import { Icon } from '../../components';
-import { colors, images } from '../../config';
-import styles from './styles'
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  FlatList,
+  ScrollView,
+  Pressable,
+  ImageBackground,
+  SafeAreaView,
+  StatusBar,
+} from 'react-native';
+import {colors, images} from '../../config';
+import styles from './styles';
+import {Icon} from '../../components';
+import {Tab, TabView, SearchBar, Header} from 'react-native-elements';
+import {
+  VStack,
+  HStack,
+  Modal,
+  Actionsheet,
+  useDisclose,
+  Box,
+  Avatar,
+  Button,
+  Spinner,
+} from 'native-base';
+import {useNavigation} from '@react-navigation/native';
+import {connect} from 'react-redux';
+import {setNote} from '../../redux/actions/Index';
+import {format} from 'date-fns';
+import {ar} from 'date-fns/locale';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+import {API_URL} from '@env';
+import DashedLine from 'react-native-dashed-line';
 
-export default class PrivacyPolicy extends React.Component{
+const PrivacyPolicy = props => {
+  const navigation = useNavigation();
 
-    constructor(props){
-        super(props)
-    }
+  return (
+    <SafeAreaView style={{height: '100%', backgroundColor: '#FFF'}}>
+      <StatusBar
+        barStyle={'dark-content'}
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <Header
+        containerStyle={{width: '90%', alignSelf: 'center'}}
+        backgroundColor="#FFF"
+        leftComponent={{
+          icon: 'keyboard-arrow-right',
+          color: '#000',
+          type: 'material',
+          size: 30,
+          onPress: () => navigation.goBack(),
+          //   iconStyle: {color: '#000'},
+        }}
+        // leftComponent={{
+        //   icon: 'keyboard-arrow-right',
+        //   color: '#000',
+        //   type: 'material',
+        //   size: 30,
+        //   onPress: () => navigation.goBack(),
+        //   //   iconStyle: {color: '#000'},
+        // }}
+        centerComponent={{
+          text: 'سياسة الخصوصية',
+          style: [
+            {color: '#000', fontSize: 20, fontWeight: 'bold'},
+            styles.address,
+          ],
+        }}
+        // rightComponent={{
+        //   icon: 'add',
+        //   color: '#000',
+        //   size: 25,
+        //   onPress: () => navigation.navigate('AddNote'),
+        // }}
+      />
+      <ScrollView>
+        <Image style={{alignSelf: 'center'}} source={images.logo} />
+        <VStack space={2}>
+          <Text style={styles.date}>
+          إنّ سياسة الخصوصية هذه تعرفك عن سياستنا فيما يتعلق بجمع و استخدام المعلومات الشخصية أثناء استخدامك للتطبيق بالإضافة للخيارات المتاحة لديك والمتعلقة بهذه المعلومات بموجب سياسة الخصوصية هذه حيث أن أولى اهتماماتنا هو حفاظ وضمان خصوصية استخدامك للموقع وخصوصية المعلومات المقدمة من قبلك على الموقع.
 
-    render(){
-        return(
-            <ScrollView>
-                    <View style={styles.header}>
-                        <View style={styles.sideHeader}>
-                            <Pressable onPress={() => this.props.navigation.pop()}>
-                                <Icon type={'material'} size={30} name={'keyboard-arrow-right'}/>
-                            </Pressable>
-                            
-                            <View>
-                                <Text style={styles.address}>سياسة التطبيق</Text>
-                            </View>
-                            <Pressable onPress={() => this.props.navigation.openDrawer()}>
-                                {/* <Icon type={'material'} size={30} name={'keyboard-arrow-right'}/> */}
-                            </Pressable>
-                        </View>
-                    </View>
-                    <Text style={styles.date}>هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
-إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقع.
-ومن هنا وجب على المصمم أن يضع نصوصا مؤقتة على التصميم ليظهر للعميل الشكل كاملاً،دور مولد النص العربى أن يوفر على المصمم عناء البحث عن نص بديل لا علاقة له بالموضوع الذى يتحدث عنه التصميم فيظهر بشكل لا يليق.
-</Text>
-                                    
-            </ScrollView>        
-        )
-    }
+نحن نقوم باستخدام معلوماتك الشخصية لتقديم الخدمات المتاحة في التطبيق وتحسينها و/أو تحسين استخدامك للتطبيق، وبمجرد استخدامك التطبيق، أنت توافق على جمعنا للمعلومات و استخدامها وفقًا لهذه السياسة.
+   
+          </Text>
+        </VStack>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
-}
+const mapStateToProps = state => ({
+  profile: state.user.profile,
+  notes: state.note.notes,
+});
+
+const mapDispatchToProps = dispatch => ({
+  //   onSetNote: note => dispatch(setNote(note)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PrivacyPolicy);

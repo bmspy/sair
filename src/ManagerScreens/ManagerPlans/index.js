@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -24,36 +24,85 @@ import {
   Box,
   Avatar,
   useToast,
+  Spinner,
 } from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
-import {putEditProfile} from '../../redux/actions/Index';
-import {format} from 'date-fns';
+import {postApproveRequest, setMonthPlanId} from '../../redux/actions/Index';
+import {format, differenceInHours} from 'date-fns';
 import {ar} from 'date-fns/locale';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
+import {API_URL} from '@env';
 
 const ManagerPlans = props => {
   const navigation = useNavigation();
   const toast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const [noSupervisors, setNoSupervisors] = useState(false);
+  const [homeContent, setHomeContent] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const getHomePage = async () => {
+      const token = await AsyncStorage.getItem('id_token');
+      const response = await axios.get(`${API_URL}get/department/supervisors/`, {
+        params: {
+          department: props.plan.id,
+          month: props.plan.month,
+          year: props.plan.year,
+        },
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      console.log(response.data);
+      if (!response.data.length) {
+        setIsLoading(false);
+        setNoSupervisors(true);
+      } else {
+        setIsLoading(false);
+        setNoSupervisors(false);
+        setHomeContent(response.data);
+      }
+    };
+    getHomePage();
+  }, [props.reload]);
+
+  const handleApproveRequest = async id => {
+    const formData = new FormData();
+    formData.append('month_plan', id);
+    props.onPostApproveRequest(formData, toast);
+  }
+
+  const handleShowPlan = monthPlanId => {
+    props.onSetMonthPlanId(monthPlanId);
+    navigation.navigate('ManagerPlan');
+  };
 
   const renderItems = ({item}) => (
     <VStack style={{width: '90%', alignSelf: 'center', backgroundColor: colors.white, marginVertical: 10, padding: 10, borderRadius: 10}}>
       <HStack style={{justifyContent: 'space-between'}}>
         <HStack style={{justifyContent: 'space-evenly'}}>
-          <Avatar source={images.avatar_new} size="sm" />
-          <Text style={styles.address3}>محمد محمد</Text>
+          <Avatar source={{uri: item.image}} size="sm" />
+          <Text style={styles.address3}>{item.full_name}</Text>
         </HStack>
-        <Text style={[styles.address3, {color: 'rgba(0, 0, 0, 0.35)'}]}>٣ ساعات</Text>
+        {
+          item.approved_request && !item.approved ? (
+            <Text style={[styles.address3, {color: 'rgba(0, 0, 0, 0.35)'}]}>{differenceInHours(new Date(), new Date(item.approved_request_time))} ساعة</Text>
+          ) : null
+        }
       </HStack>
       <HStack style={{paddingHorizontal:40}}>
-        <Text style={[styles.address3, {color: 'rgba(0, 0, 0, 0.35)'}]}>مشرف رياضيات</Text>
+        <Text style={[styles.address3, {color: 'rgba(0, 0, 0, 0.35)'}]}>{item.job}</Text>
       </HStack>
       <HStack style={{justifyContent: 'space-around'}}>
-      <Pressable style={[styles.btn, {width: '40%'}]}>
-        <Text style={[styles.address3, {color: colors.black}]}>عرض الخطة</Text>
+      <Pressable onPress={() => handleShowPlan(item.id)} style={[styles.btn, {width: '40%', backgroundColor: colors.primary}]}>
+        <Text style={[styles.address3, {color: colors.white}]}>عرض الخطة</Text>
       </Pressable>
-      <Pressable style={[styles.btn, {width: '40%', backgroundColor: colors.primary}]}>
+      <Pressable onPress={() => item.approved_request && !item.approved ? handleApproveRequest(item.id) : null} style={[styles.btn, {width: '40%', backgroundColor: item.approved_request && !item.approved ? colors.primary : 'rgba(0, 0, 0, 0.23)'}]}>
         <Text style={[styles.address3, {color: colors.white}]}>اعتماد الخطة</Text>
       </Pressable>
       </HStack>
@@ -91,17 +140,29 @@ const ManagerPlans = props => {
             styles.address,
           ],
         }}
-        rightComponent={<Avatar source={images.avatar_new} size="sm" />}
+        rightComponent={<Pressable onPress={() => navigation.navigate('Profile')}><Avatar source={{uri: props.profile.image}} size="sm" /></Pressable>}
       />
       <Text style={[styles.address3, {textAlign: 'center'}]}>
         {format(new Date(), 'dd MMM yyyy', {locale: ar})}
       </Text>
       {/* <Box style={{marginVertical: 10}}> */}
+      {isLoading ? (
+        <Spinner style={{alignSelf: 'center', flex: 1}} size="lg" />
+      ) : noSupervisors ? (
+        <VStack
+          style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+          <Text style={[styles.address, {color: colors.primary}]}>
+            لا يوجد أي خطة في هذا الشهر
+          </Text>
+        </VStack>
+      ) : (
         <FlatList
-          data={[{}, {}, {}, {}, {}]}
-          // keyExtractor={item => item.id}
+          data={homeContent}
+          keyExtractor={item => item.id}
           renderItem={renderItems}
         />
+      )}
+       
       {/* </Box> */}
     </SafeAreaView>
   );
@@ -109,11 +170,15 @@ const ManagerPlans = props => {
 
 const mapStateToProps = state => ({
   isLoading: state.ui.isLoading,
+  reload: state.ui.reload,
   profile: state.user.profile,
+  plan: state.plan.plan,
 });
 
 const mapDispatchToProps = dispatch => ({
-  // onPutEditProfile: (formData, navigateToTarget, regToast) => dispatch(putEditProfile(formData, navigateToTarget, regToast)),
+  onPostApproveRequest: (formData, regToast) => dispatch(postApproveRequest(formData, regToast)),
+  onSetMonthPlanId: monthPlanId =>
+    dispatch(setMonthPlanId(monthPlanId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManagerPlans);

@@ -36,10 +36,10 @@ export default StyleSheet.create({
     },
     btn:{
         backgroundColor:colors.primary,
-        width:309,
+        width:'40%',
         height:47,
         alignSelf:'center',
-        marginHorizontal:'10%',
+        // marginHorizontal:'10%',
         borderRadius:24,
         alignItems:'center',
         justifyContent:'center',

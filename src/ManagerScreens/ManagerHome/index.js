@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,8 @@ import {
   ImageBackground,
   SafeAreaView,
   StatusBar,
+  BackHandler,
+  Alert,
 } from 'react-native';
 import {colors, images} from '../../config';
 import styles from './styles';
@@ -24,15 +26,21 @@ import {
   Box,
   Avatar,
   useToast,
+  Spinner,
 } from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
-import {putEditProfile} from '../../redux/actions/Index';
+import {setPlan} from '../../redux/actions/Index';
 import {format} from 'date-fns';
 import {ar} from 'date-fns/locale';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {useFocusEffect} from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
+import {API_URL} from '@env';
 import Departments from './departments';
+// import LoadingModal from '../../components/LoadingModal/index';
 
 // const FirstRoute = props => {
 //   const navigation = useNavigation();
@@ -67,24 +75,69 @@ import Departments from './departments';
 //   );
 // };
 
-const SecondRoute = () => <View style={{flex: 1}} />;
-
-const ThirdRoute = () => <View style={{flex: 1}} />;
-
-const FourthRoute = () => <View style={{flex: 1}} />;
-
-const renderScene = SceneMap({
-  first: Departments,
-  second: SecondRoute,
-  third: ThirdRoute,
-  fourth: FourthRoute,
-});
 
 const ManagerHome = props => {
   const navigation = useNavigation();
   const toast = useToast();
   const [search, setSearch] = useState('');
-  const [monthIndex, setMonthIndex] = useState(0);
+  const [isSearching, setIsSearching] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState(format(new Date(), 'MM'));
+  const [isLoading, setIsLoading] = useState(false);
+  const [noDepartments, setNoDepartments] = useState(false);
+  const [homeContent, setHomeContent] = useState([]);
+  const [reload, setReload] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      const handleBack = () => {
+        Alert.alert('الخروج من التطبيق', 'هل تريد بالتأكيد الخروج من التطبيق؟', [
+          {
+            text: 'إلغاء',
+            style: 'cancel',
+          },
+          {
+            text: 'تأكيد الخروج',
+            onPress: () => BackHandler.exitApp(),
+          },
+        ]);
+
+        return true;
+      };
+
+      const unsubscribe = BackHandler.addEventListener(
+        'hardwareBackPress',
+        handleBack,
+      );
+
+      return () => unsubscribe.remove();
+    }, []),
+  );
+
+  useEffect(() => {
+    setIsLoading(true);
+    const getHomePage = async () => {
+      const token = await AsyncStorage.getItem('id_token');
+      const response = await axios.get(`${API_URL}get/manager/homepage/`, {
+        params: {
+          month: selectedMonth,
+          year: format(new Date(), 'yyyy'),
+        },
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      // console.log(response.data);
+      if (!response.data.length) {
+        setIsLoading(false);
+        setNoDepartments(true);
+      } else {
+        setIsLoading(false);
+        setNoDepartments(false);
+        setHomeContent(response.data);
+      }
+    };
+    getHomePage();
+  }, [selectedMonth, props.reload, reload]);
 
   const monthsText = [
     {
@@ -137,41 +190,19 @@ const ManagerHome = props => {
     },
   ];
 
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    {key: 'first', title: 'الجميع'},
-    {key: 'second', title: 'رياضيات'},
-    {key: 'third', title: 'فيزياء'},
-    {key: 'fourth', title: 'لغة عربية'},
-  ]);
-
-  const renderTabBar = props => (
-    <TabBar
-      {...props}
-      indicatorStyle={{backgroundColor: colors.primary}}
-      //   labelStyle={{color: '#000'}}
-      style={{backgroundColor: '#F2F2F2'}}
-      scrollEnabled
-      renderLabel={({route, focused, color}) => (
-        <Text
-          style={[
-            styles.address3,
-            {color: focused ? colors.primary : '#000', margin: 8},
-          ]}>
-          {route.title}
-        </Text>
-      )}
-    />
-  );
+  const handleSelectMonth = month => {
+    setSelectedMonth(month);
+    setHomeContent([]);
+  };
 
   const renderMonths = ({item}) => (
     <Pressable
-      onPress={() => setMonthIndex(item.id - 1)}
+      onPress={() => handleSelectMonth(item.id)}
       style={{
         width: wp('15%'),
         height: wp('20%'),
         backgroundColor:
-          item.id - 1 === monthIndex ? colors.primary : colors.white,
+          item.id == selectedMonth ? colors.primary : colors.white,
         marginHorizontal: 5,
         borderRadius: 10,
         alignItems: 'center',
@@ -181,13 +212,74 @@ const ManagerHome = props => {
         style={[
           styles.address3,
           {
-            color: item.id - 1 === monthIndex ? colors.white : colors.primary,
+            color: item.id == selectedMonth ? colors.white : colors.primary,
             fontSize: 12,
           },
         ]}>
         {item.name}
       </Text>
     </Pressable>
+  );
+  
+  const handleManagerPlans = item => {
+    props.onSetPlan(item);
+    navigation.navigate('ManagerPlans');
+  };
+
+  const handleSearch = () => {
+    // notes.filter(note => {
+    // });
+    //SEARCH CODE
+    try {
+      if (search !== '') {
+        setIsSearching(true);
+        let searchResult = [];
+        for (let key in homeContent) {
+          //console.log(parsedRes[key].address);
+          let homeContentName = homeContent[key].name.toLowerCase();
+          if (homeContentName.includes(search.toLowerCase()) && search.trim() !== '') {
+            searchResult.push(homeContent[key]);
+          }
+        }
+        console.log(searchResult);
+        setHomeContent(searchResult);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    
+  };
+
+  const renderItems = ({item}) => (
+    <VStack
+      style={{
+        width: '90%',
+        alignSelf: 'center',
+        backgroundColor: colors.white,
+        marginVertical: 10,
+        padding: 10,
+        borderRadius: 10,
+      }}>
+      <HStack style={{justifyContent: 'space-between'}}>
+        <HStack style={{justifyContent: 'space-evenly'}}>
+          <Avatar source={images.avatar_new} size="sm" />
+          <Text style={styles.address3}>{item.name}</Text>
+        </HStack>
+        {/* <Text style={styles.address3}>٣ ساعات</Text> */}
+      </HStack>
+      <HStack style={{justifyContent: 'space-evenly'}}>
+        <Text style={styles.address3}>الإجمالي {item.all}</Text>
+        <Text style={styles.address3}>مكتمل {item.done}</Text>
+        <Text style={styles.address3}>غير مكتمل {item.not_done}</Text>
+      </HStack>
+      <Pressable
+        style={[styles.btn, {backgroundColor: colors.primary}]}
+        onPress={() => handleManagerPlans(item)}>
+        <Text style={[styles.address3, {color: colors.white}]}>
+          عرض المشرفين
+        </Text>
+      </Pressable>
+    </VStack>
   );
 
   return (
@@ -198,6 +290,7 @@ const ManagerHome = props => {
         backgroundColor="transparent"
         translucent={true}
       />
+      {/* <LoadingModal message={'يرجى الإنتظار'} loading={props.isLoading} /> */}
       <Header
         containerStyle={{width: '90%', alignSelf: 'center'}}
         backgroundColor="#F2F2F2"
@@ -221,7 +314,7 @@ const ManagerHome = props => {
             styles.address,
           ],
         }}
-        rightComponent={<Avatar source={images.avatar_new} size="sm" />}
+        rightComponent={<Pressable onPress={() => navigation.navigate('Profile')}><Avatar source={{uri: props.profile.image}} size="sm" /></Pressable>}
       />
       <Text style={[styles.address3, {textAlign: 'center'}]}>
         {format(new Date(), 'dd MMM yyyy', {locale: ar})}
@@ -242,7 +335,11 @@ const ManagerHome = props => {
         }}
         inputContainerStyle={{backgroundColor: '#FFF', borderRadius: 15}}
         inputStyle={{backgroundColor: '#FFF', textAlign: 'right'}}
-        onSubmitEditing={() => alert('Submitted!')}
+        onSubmitEditing={handleSearch}
+        onClear={() => {
+          setReload(!reload);
+          setIsSearching(false);
+        }}
         // style={{borderWidth: 1}}
       />
       <Box style={{marginVertical: 10}}>
@@ -254,24 +351,41 @@ const ManagerHome = props => {
           showsHorizontalScrollIndicator={false}
         />
       </Box>
-      <TabView
-        navigationState={{index, routes}}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{width: '100%'}}
-        renderTabBar={renderTabBar}
-      />
+      {isLoading ? (
+        <Spinner style={{alignSelf: 'center', flex: 1}} size="lg" />
+      ) : noDepartments ? (
+        <VStack
+          style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+          <Text style={[styles.address, {color: colors.primary}]}>
+            لا يوجد أي خطة في هذا الشهر
+          </Text>
+        </VStack>
+      ) : (
+        <FlatList
+          data={homeContent}
+          keyExtractor={item => item.id}
+          renderItem={renderItems}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
+      {/* <FlatList
+        data={homeContent}
+        keyExtractor={item => item.id}
+        renderItem={renderItems}
+        showsVerticalScrollIndicator={false}
+      /> */}
     </SafeAreaView>
   );
 };
 
 const mapStateToProps = state => ({
   isLoading: state.ui.isLoading,
+  reload: state.ui.reload,
   profile: state.user.profile,
 });
 
 const mapDispatchToProps = dispatch => ({
-  // onPutEditProfile: (formData, navigateToTarget, regToast) => dispatch(putEditProfile(formData, navigateToTarget, regToast)),
+  onSetPlan: (item) => dispatch(setPlan(item)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManagerHome);

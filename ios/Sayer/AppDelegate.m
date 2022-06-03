@@ -7,6 +7,7 @@
 
 #import <GoogleMaps/GoogleMaps.h>
 #import <ReactNativeConfig.h> // For ENV
+#import "RNBootSplash.h" // <- add the header import
 
 
 #ifdef FB_SONARKIT_ENABLED
@@ -58,6 +59,7 @@ static void InitializeFlipper(UIApplication *application) {
   [self.window makeKeyAndVisible];
   [[RCTI18nUtil sharedInstance] allowRTL:YES];
   [[RCTI18nUtil sharedInstance] forceRTL:YES];
+  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView]; // <- initialization using the storyboard file name
   return YES;
 }
 

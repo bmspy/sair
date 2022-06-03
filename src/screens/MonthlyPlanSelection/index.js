@@ -69,7 +69,7 @@ const MonthlyPlanSelection = props => {
           marginTop: hp('10%'),
         }}>
         <VStack space={5} style={{alignItems: 'center'}}>
-          <Pressable onPress={() => navigation.navigate('PlaneDetails')}>
+          <Pressable onPress={() => navigation.navigate('ActualPlan')}>
             <Box
               padding={10}
               style={{

@@ -11,7 +11,14 @@ import {
 import {Icon} from '../../components';
 import {colors, images} from '../../config';
 import styles from './styles';
-import {Tab, TabView, Card, Header, SearchBar, FAB} from 'react-native-elements';
+import {
+  Tab,
+  TabView,
+  Card,
+  Header,
+  SearchBar,
+  FAB,
+} from 'react-native-elements';
 import {
   VStack,
   HStack,
@@ -34,13 +41,19 @@ import MapView, {
   PROVIDER_GOOGLE,
   Callout,
 } from 'react-native-maps';
+import {format} from 'date-fns';
+import {ar} from 'date-fns/locale';
+import {connect} from 'react-redux';
+import {} from '../../redux/actions/Index';
 
 const SchoolLocation = props => {
   const navigation = useNavigation();
   const [showModal, setShowModal] = useState(false);
   const [viewCoordinate, setViewCoordinate] = useState({
-    latitude: 24.2505644,
-    longitude: 55.7582294,
+    latitude: Number(props.plan.destination?.destination_details?.latitude),
+    longitude: Number(
+      props.plan.destination?.destination_details?.longitude,
+    ),
     latitudeDelta: 0.0322,
     longitudeDelta: 0.0221,
   });
@@ -55,13 +68,52 @@ const SchoolLocation = props => {
       />
       <View style={{flex: 1}}>
         <MapView
-          // showsUserLocation={true}
-          followsUserLocation={true}
           provider={PROVIDER_GOOGLE}
           style={{flex: 1}}
           initialRegion={viewCoordinate}
           //   region={viewCoordinate}
-        />
+        >
+          <Marker
+            title={
+              'مدرسة ' + props.plan.destination?.destination_details?.name
+            }
+            coordinate={viewCoordinate}>
+            {/* <DestinationMark width={30} height={30} /> */}
+            <Image source={images.awesome_school} />
+            {/* <Icon name="office-building" type='material-community' size={35} color={colors.primary} /> */}
+          </Marker>
+
+          {/* <Marker
+            title={
+              'مدرسة ' + props.plan.destinations[1]?.destination_details?.name
+            }
+            coordinate={{
+              latitude:
+                Number(
+                  props.plan.destinations[1]?.destination_details?.latitude,
+                ) + -0.008,
+              longitude:
+                Number(
+                  props.plan.destinations[1]?.destination_details?.longitude,
+                ) + 0.004,
+              latitudeDelta: 0.0322,
+              longitudeDelta: 0.0221,
+            }}>
+            <Image source={images.awesome_school} />
+          </Marker> */}
+
+          {/* <Polyline
+            coordinates={[
+              {latitude: Number(props.plan.destinations[1]?.destination_details?.latitude) + -0.008, longitude: Number(props.plan.destinations[1]?.destination_details?.longitude) + 0.004},
+              {latitude: Number(props.plan.destinations[1]?.destination_details?.latitude), longitude: Number(props.plan.destinations[1]?.destination_details?.longitude)},
+            ]}
+            strokeColor={colors.primary} // fallback for when `strokeColors` is not supported by the map-provider
+            strokeColors={[
+              colors.primary,
+            ]}
+            strokeWidth={6}
+          /> */}
+        </MapView>
         <HStack
           style={{
             position: 'absolute',
@@ -176,7 +228,7 @@ const SchoolLocation = props => {
               paddingTop: 10,
             }}>
             <HStack justifyContent="flex-start">
-              <Avatar size="sm" source={images.my_avatar} />
+              <Avatar size="sm" source={{uri: props.profile.image}} />
               <HStack>
                 <VStack>
                   <Text
@@ -184,16 +236,22 @@ const SchoolLocation = props => {
                       styles.address1,
                       {color: colors.dimGray, textAlign: 'left', fontSize: 16},
                     ]}>
-                    مدرسة الطلائع /بسيارتك الخاصة
+                    مدرسة{' '}
+                    {props.plan.destination?.destination_details?.name} /
+                    {props.plan[1]?.go_method === 1
+                      ? 'مع سائق'
+                      : 'بسيارتك الخاصة'}
                   </Text>
                   <Text
                     style={[
                       styles.address1,
                       {color: colors.dimGray, textAlign: 'left'},
                     ]}>
-                    الخميس 8 اكتوبر , 2021
+                    {format(new Date(props.plan?.date), 'eeee dd MMM , yyyy', {
+                      locale: ar,
+                    })}
                   </Text>
-                  <HStack>
+                  {/* <HStack>
                     <Icon
                       name="clock"
                       type="feather"
@@ -207,7 +265,7 @@ const SchoolLocation = props => {
                       ]}>
                       الوقت المتوقع للوصول 22 د
                     </Text>
-                  </HStack>
+                  </HStack> */}
                 </VStack>
               </HStack>
             </HStack>
@@ -221,4 +279,14 @@ const SchoolLocation = props => {
   );
 };
 
-export default SchoolLocation;
+const mapStateToProps = state => ({
+  isLoading: state.ui.isLoading,
+  plan: state.plan.plan,
+  profile: state.user.profile,
+});
+
+const mapDispatchToProps = dispatch => ({
+  // onSetNoteDate: date => dispatch(setNoteDate(date)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SchoolLocation);

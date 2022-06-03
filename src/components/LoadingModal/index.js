@@ -51,3 +51,5 @@ export  default function LoadingModal({message, loading}: {message: string, load
     </Modal>
   );
 }
+
+// Developed by Mustafa Alabadla

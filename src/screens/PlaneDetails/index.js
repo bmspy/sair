@@ -38,19 +38,24 @@ import {
   differenceInCalendarDays,
   isFirstDayOfMonth,
 } from 'date-fns';
-import {ar} from 'date-fns/locale'
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {ar} from 'date-fns/locale';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {} from '../../redux/actions/Index';
+import {planApprove, setPlanApproveModal} from '../../redux/actions/Index';
 import {API_URL} from '@env';
 
 const PlaneDetails = props => {
   const navigation = useNavigation();
-  const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  // const [showModal, setShowModal] = useState(false);
   const [planDetailsData, setPlanDetailsData] = useState({});
+  const [planComplete, setplanComplete] = useState(false);
 
   const plans = [
     {
@@ -91,11 +96,11 @@ const PlaneDetails = props => {
   ];
 
   useEffect(() => {
+    setIsLoading(true);
     const getPlanDetails = async () => {
       const token = await AsyncStorage.getItem('id_token');
-      const response = await axios.get(
-        `${API_URL}get/plan/details/`,
-        {
+      try {
+        const response = await axios.get(`${API_URL}get/plan/details/`, {
           params: {
             month: props.planDetailsDate.planDetailsMonth,
             year: props.planDetailsDate.planDetailsYear,
@@ -103,13 +108,33 @@ const PlaneDetails = props => {
           headers: {
             Authorization: `Token ${token}`,
           },
-        },
-      );
-      setPlanDetailsData(response.data);
+        });
+        setIsLoading(false);
+        setPlanDetailsData(response.data);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+      }
     };
 
     getPlanDetails();
   }, []);
+
+  const handleRequestApprove = () => {
+    const formData = new FormData();
+    formData.append('month', props.planDetailsDate.planDetailsMonth);
+    formData.append('year', props.planDetailsDate.planDetailsYear);
+    props.onPlanApprove(formData);
+  };
+
+  const handleEditPlan = () => {
+    // props.onSet
+    if (planDetailsData?.approved_request || planDetailsData?.approved) {
+      alert('لا يمكن تعديل الخطة لأنها قيد الاعتماد أو قد تم اعتمادها');
+    } else {
+      navigation.navigate('EditPlane');
+    }
+  };
 
   // const createPDF = async () => {
   //   let options = {
@@ -151,8 +176,7 @@ const PlaneDetails = props => {
               paddingBottom: 15,
             }}>
             <HStack space={2} alignItems="center">
-              <Pressable
-                onPress={() => navigation.navigate('MonthlyVisitsPlane')}>
+              <Pressable onPress={() => navigation.goBack()}>
                 <Icon
                   name={'keyboard-arrow-right'}
                   type={'material'}
@@ -172,7 +196,7 @@ const PlaneDetails = props => {
                 تفاصيل الخطة
               </Text>
             </HStack>
-            <Pressable onPress={() => navigation.navigate('EditPlane')}>
+            <Pressable onPress={handleEditPlan}>
               <HStack space={2} alignItems="center">
                 <Icon
                   name={'edit'}
@@ -234,7 +258,15 @@ const PlaneDetails = props => {
                       fontSize: 14,
                     },
                   ]}>
-                  {format(new Date(`${props.planDetailsDate.planDetailsYear}-${props.planDetailsDate.planDetailsMonth}`), 'MMM', {locale: ar})}
+                  {/* {`${props.planDetailsDate?.planDetailsYear}-${props.planDetailsDate?.planDetailsMonth}`} */}
+                  {format(
+                    new Date(
+                      `${props.planDetailsDate?.planDetailsYear}-${props.planDetailsDate?.planDetailsMonth}`,
+                    ),
+                    'MMM',
+                    {locale: ar},
+                  )}
+                  {/* {format(new Date('2021-08'), 'MMM', {locale: ar})} */}
                 </Text>
                 <Text
                   style={[
@@ -297,7 +329,7 @@ const PlaneDetails = props => {
                         fontSize: 14,
                       },
                     ]}>
-                    المدرسة
+                    الوجهة
                   </Text>
                 </VStack>
                 <Text
@@ -314,7 +346,89 @@ const PlaneDetails = props => {
               </HStack>
               {/* Table Head End */}
               {/* Table Body Start */}
-              {
+              <ScrollView
+                style={{height: hp('30%')}}
+                showsVerticalScrollIndicator={false}>
+                {!isLoading && planDetailsData?.plans ? (
+                  planDetailsData?.plans?.map((p, i) => (
+                    <HStack
+                      key={i}
+                      style={{
+                        justifyContent: 'space-between',
+                        width: '100%',
+                        paddingVertical: 5,
+                      }}>
+                      <Text
+                        style={[
+                          styles.loginBtn,
+                          {
+                            color: colors.dimGray,
+                            marginHorizontal: 5,
+                            fontSize: 14,
+                            textAlign: 'left',
+                          },
+                        ]}>
+                        {format(new Date(p.date), 'd eeee', {locale: ar})}
+                      </Text>
+                      <VStack
+                        style={{
+                          alignSelf: 'center',
+                          justifyContent: 'center',
+                          //   backgroundColor: 'gray',
+                          width: '100%',
+                          position: 'absolute',
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          numberOfLines={1}
+                          style={[
+                            styles.loginBtn,
+                            {
+                              color: colors.dimGray,
+                              marginHorizontal: 5,
+                              fontSize: 14,
+                              textAlign: 'left',
+                              maxWidth: wp('40%'),
+                            },
+                          ]}>
+                          {p.destination_name}
+                        </Text>
+                      </VStack>
+
+                      <Text
+                        style={[
+                          styles.loginBtn,
+                          {
+                            color: colors.dimGray,
+                            marginHorizontal: 5,
+                            fontSize: 14,
+                            textAlign: 'left',
+                          },
+                        ]}>
+                        {p.go_method ? 'سائق' : 'سيارة خاصة'}
+                      </Text>
+                    </HStack>
+                  ))
+                ) : !isLoading && !planDetailsData?.plans ? (
+                  <Box style={{marginVertical: hp('15%')}}>
+                    <Text
+                      style={[
+                        styles.loginBtn,
+                        {
+                          color: colors.dimGray,
+                          marginHorizontal: 5,
+                          fontSize: 14,
+                          textAlign: 'center',
+                        },
+                      ]}>
+                      لا يمكن عرض هذه الخطة لأنها غير مكتملة
+                    </Text>
+                  </Box>
+                ) : (
+                  <Spinner style={{marginVertical: hp('15%')}} size="lg" />
+                )}
+              </ScrollView>
+              {/* {
               planDetailsData?.plans ?
               planDetailsData?.plans?.map((p, i) => (
                 <HStack
@@ -373,66 +487,125 @@ const PlaneDetails = props => {
                     {p.go_method ? 'سائق' : 'سيارة خاصة'}
                   </Text>
                 </HStack>
-              )) : (<Spinner style={{marginVertical: 50}} size='lg' />)}
+              )) : (<Spinner style={{marginVertical: 50}} size='lg' />)} */}
               {/* Table Body Finish */}
             </VStack>
             {/* Table Finish */}
 
-            <VStack space={3} style={{marginTop: 15}}>
-              <HStack>
-                <Text
-                  style={[
-                    styles.loginBtn,
-                    {
-                      color: colors.primary,
-                      marginHorizontal: 5,
-                      fontSize: 14,
-                      textAlign: 'left',
-                    },
-                  ]}>
-                  التفاصيل
-                </Text>
-              </HStack>
-              <HStack>
-                <Text
-                  style={[
-                    styles.loginBtn,
-                    {
-                      color: colors.dimGray,
-                      marginHorizontal: 5,
-                      fontSize: 14,
-                      textAlign: 'left',
-                    },
-                  ]}>
-                  هذه الخطة الشهرية للمشرف في انتظار اعتماد مدير الدائرة.
-                </Text>
-              </HStack>
-              {/* Button */}
-              <Pressable
-                onPress={() => setShowModal(true)}
-                style={[styles.btn, {width: '70%', marginVertical: '5%'}]}>
-                <HStack
-                  style={{justifyContent: 'center', alignItems: 'center'}}
-                  space={2}>
-                  {/* <Icon name={'lock'} type={'material'} size={20} color="#FFF" /> */}
-                  <Text style={styles.loginBtn}> اعتماد رئيس القسم </Text>
+            {!planDetailsData?.plans ? null : (
+              <VStack space={3} style={{marginTop: 15}}>
+                <HStack>
+                  <Text
+                    style={[
+                      styles.loginBtn,
+                      {
+                        color: colors.primary,
+                        marginHorizontal: 5,
+                        fontSize: 14,
+                        textAlign: 'left',
+                      },
+                    ]}>
+                    التفاصيل
+                  </Text>
                 </HStack>
-              </Pressable>
 
-              {/* <Pressable
-                onPress={createPDF}
-                style={[styles.btn, {width: '70%', marginVertical: '5%'}]}>
-                <HStack
-                  style={{justifyContent: 'center', alignItems: 'center'}}>
-                  <Text style={styles.loginBtn}> Print PDF </Text>
+                <HStack>
+                  {planDetailsData?.finished &&
+                      !planDetailsData?.approved_request &&
+                      !planDetailsData?.approved ? (
+                    <Text
+                      style={[
+                        styles.loginBtn,
+                        {
+                          color: colors.dimGray,
+                          marginHorizontal: 5,
+                          fontSize: 14,
+                          textAlign: 'left',
+                        },
+                      ]}>
+                      هذه الخطة الشهرية للمشرف مكتملة في انتظار تسليمها لمدير الدائرة.
+                    </Text>
+                  ) : planDetailsData?.finished &&
+                  planDetailsData?.approved_request &&
+                  !planDetailsData?.approved ? (
+                    <Text
+                      style={[
+                        styles.loginBtn,
+                        {
+                          color: colors.dimGray,
+                          marginHorizontal: 5,
+                          fontSize: 14,
+                          textAlign: 'left',
+                        },
+                      ]}>
+                      هذه الخطة الشهرية للمشرف في انتظار اعتماد مدير الدائرة.
+                    </Text>
+                  ) : planDetailsData?.approved ? (
+                    <Text
+                      style={[
+                        styles.loginBtn,
+                        {
+                          color: colors.dimGray,
+                          marginHorizontal: 5,
+                          fontSize: 14,
+                          textAlign: 'left',
+                        },
+                      ]}>
+                      هذه الخطة الشهرية للمشرف معتمدة من مدير الدائرة.
+                    </Text>
+                  ) : null}
                 </HStack>
-              </Pressable> */}
-            </VStack>
+                {/* Button */}
+                {planDetailsData?.approved_request ||
+                planDetailsData?.approved ? null : (
+                  <Pressable
+                    onPress={() =>
+                      planDetailsData?.finished &&
+                      !planDetailsData?.approved_request &&
+                      !planDetailsData?.approved
+                        ? handleRequestApprove()
+                        : null
+                    }
+                    style={[
+                      styles.btn,
+                      {
+                        width: '70%',
+                        marginVertical: '5%',
+                        backgroundColor:
+                          planDetailsData?.finished &&
+                          !planDetailsData?.approved_request &&
+                          !planDetailsData?.approved
+                            ? colors.primary
+                            : '#C4C4C4',
+                      },
+                    ]}>
+                    <HStack
+                      style={{justifyContent: 'center', alignItems: 'center'}}
+                      space={2}>
+                      {/* <Icon name={'lock'} type={'material'} size={20} color="#FFF" /> */}
+                      <Text style={styles.loginBtn}>
+                        {' '}
+                        تأكيد الخطة و تسليمها{' '}
+                      </Text>
+                    </HStack>
+                  </Pressable>
+                )}
+
+                {/* <Pressable
+                      onPress={createPDF}
+                      style={[styles.btn, {width: '70%', marginVertical: '5%'}]}>
+                      <HStack
+                        style={{justifyContent: 'center', alignItems: 'center'}}>
+                        <Text style={styles.loginBtn}> Print PDF </Text>
+                      </HStack>
+                    </Pressable> */}
+              </VStack>
+            )}
           </ScrollView>
           {/* Body Finish */}
         </VStack>
       </Card>
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+      <Modal isOpen={props.planApproveModal}>
         <Modal.Content maxWidth="400px" paddingY={7}>
           <VStack space={2}>
             <Text
@@ -458,7 +631,7 @@ const PlaneDetails = props => {
               {/* Button */}
               <Pressable
                 onPress={() => {
-                  setShowModal(false);
+                  props.onSetPlanApproveModal(false);
                   navigation.navigate('Home');
                 }}
                 style={[styles.btn, {width: '70%', marginVertical: '5%'}]}>
@@ -480,10 +653,12 @@ const PlaneDetails = props => {
 const mapStateToProps = state => ({
   profile: state.user.profile,
   planDetailsDate: state.plan.planDetailsDate,
+  planApproveModal: state.plan.planApproveModal,
 });
 
 const mapDispatchToProps = dispatch => ({
-  // onSetPlanDetailsDate: (planDetailsDate) => dispatch(setPlanDetailsDate(planDetailsDate))
+  onPlanApprove: formData => dispatch(planApprove(formData)),
+  onSetPlanApproveModal: flag => dispatch(setPlanApproveModal(flag)),
   // onPostCreateNote: (formData, navigateToTarget, regToast) =>
   //   dispatch(postCreateNote(formData, navigateToTarget, regToast)),
 });

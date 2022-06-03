@@ -10,6 +10,9 @@ import {
   isFirstDayOfMonth,
   lastDayOfMonth,
 } from 'date-fns';
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
+import {API_URL} from '@env';
 
 // CALENDAR DAY DOTS COLOR
 export const dotColors = {
@@ -25,12 +28,12 @@ export const dotColors = {
   },
   others1: {
     key: 'others1',
-    color: '#4298D2',
+    color: '#2C08D5',
     selectedDotColor: '#FFF',
   },
   others2: {
     key: 'others2',
-    color: '#4298D2',
+    color: '#2C08D5',
     selectedDotColor: '#FFF',
   },
   holiday1: {
@@ -117,15 +120,22 @@ export const arabicMonths = {
 };
 
 // HANDLE DISABLED DAYS IN CALENDAR
-export const handlePreviousDays = previousDays => {
+export const handlePreviousDays = (previousDays, selectedDay) => {
   let newPreviousDays = previousDays;
   for (let i = parseInt(format(new Date(), 'dd')); i >= 1; i--) {
     let loopDate = format(subDays(new Date(), i), 'yyyy-MM-dd');
     newPreviousDays = {
       ...newPreviousDays,
-      [loopDate]: {disabled: true, disableTouchEvent: true},
+      [loopDate]: {
+        disabled: true,
+        disableTouchEvent: true,
+      },
     };
   }
+
+  // selected: selectedDay == loopDate ? true : false,
+  // marked: true,
+  // selectedColor: '#7F05A3',
 
   // DISABLE CURRENT MONTH WEEKENDS
   eachWeekendOfMonth(new Date()).forEach(item => {
@@ -229,3 +239,114 @@ export const handlePreviousDays = previousDays => {
 
   return newPreviousDays;
 };
+
+// HANDLE DISABLED DAYS IN CALENDAR
+export const handleWeekends = (previousDays, selectedDay) => {
+  let newPreviousDays = previousDays;
+  // selected: selectedDay == loopDate ? true : false,
+  // marked: true,
+  // selectedColor: '#7F05A3',
+
+  // DISABLE CURRENT MONTH WEEKENDS
+  eachWeekendOfMonth(new Date()).forEach(item => {
+    newPreviousDays = {
+      ...newPreviousDays,
+      [format(subDays(new Date(item), 1), 'yyyy-MM-dd')]: {
+        disabled: true,
+        disableTouchEvent: true,
+        dots: [dotColors.holiday1, dotColors.holiday2],
+      },
+    };
+  });
+
+  // IF THE LAST DAY OF THE MONTH IS WEEKEND DISABLE IT
+  format(lastDayOfMonth(new Date()), 'eeee') === 'Friday' ||
+  format(lastDayOfMonth(new Date()), 'eeee') === 'Saturday'
+    ? (newPreviousDays = {
+        ...newPreviousDays,
+        [format(lastDayOfMonth(new Date()), 'yyyy-MM-dd')]: {
+          disabled: true,
+          disableTouchEvent: true,
+          dots: [dotColors.holiday1, dotColors.holiday2],
+        },
+      })
+    : null;
+
+  // DISABLE SECOND MONTH WEEKENDS
+  eachWeekendOfMonth(addMonths(new Date(), 1)).forEach(item => {
+    newPreviousDays = {
+      ...newPreviousDays,
+      [format(subDays(new Date(item), 1), 'yyyy-MM-dd')]: {
+        disabled: true,
+        disableTouchEvent: true,
+        dots: [dotColors.holiday1, dotColors.holiday2],
+      },
+    };
+  });
+
+  // IF THE LAST DAY OF THE MONTH IS WEEKEND DISABLE IT
+  format(lastDayOfMonth(addMonths(new Date(), 1)), 'eeee') === 'Friday' ||
+  format(lastDayOfMonth(addMonths(new Date(), 1)), 'eeee') === 'Saturday'
+    ? (newPreviousDays = {
+        ...newPreviousDays,
+        [format(lastDayOfMonth(addMonths(new Date(), 1)), 'yyyy-MM-dd')]: {
+          disabled: true,
+          disableTouchEvent: true,
+          dots: [dotColors.holiday1, dotColors.holiday2],
+        },
+      })
+    : null;
+
+  // DISABLE THIRD MONTH WEEKENDS
+  eachWeekendOfMonth(addMonths(new Date(), 2)).forEach(item => {
+    newPreviousDays = {
+      ...newPreviousDays,
+      [format(subDays(new Date(item), 1), 'yyyy-MM-dd')]: {
+        disabled: true,
+        disableTouchEvent: true,
+        dots: [dotColors.holiday1, dotColors.holiday2],
+      },
+    };
+  });
+
+  // IF THE LAST DAY OF THE MONTH IS WEEKEND DISABLE IT
+  format(lastDayOfMonth(addMonths(new Date(), 2)), 'eeee') === 'Friday' ||
+  format(lastDayOfMonth(addMonths(new Date(), 2)), 'eeee') === 'Saturday'
+    ? (newPreviousDays = {
+        ...newPreviousDays,
+        [format(lastDayOfMonth(addMonths(new Date(), 2)), 'yyyy-MM-dd')]: {
+          disabled: true,
+          disableTouchEvent: true,
+          dots: [dotColors.holiday1, dotColors.holiday2],
+        },
+      })
+    : null;
+
+  // DISABLE FOURTH MONTH WEEKENDS
+  eachWeekendOfMonth(addMonths(new Date(), 3)).forEach(item => {
+    newPreviousDays = {
+      ...newPreviousDays,
+      [format(subDays(new Date(item), 1), 'yyyy-MM-dd')]: {
+        disabled: true,
+        disableTouchEvent: true,
+        dots: [dotColors.holiday1, dotColors.holiday2],
+      },
+    };
+  });
+
+  // IF THE LAST DAY OF THE MONTH IS WEEKEND DISABLE IT
+  format(lastDayOfMonth(addMonths(new Date(), 3)), 'eeee') === 'Friday' ||
+  format(lastDayOfMonth(addMonths(new Date(), 3)), 'eeee') === 'Saturday'
+    ? (newPreviousDays = {
+        ...newPreviousDays,
+        [format(lastDayOfMonth(addMonths(new Date(), 3)), 'yyyy-MM-dd')]: {
+          disabled: true,
+          disableTouchEvent: true,
+          dots: [dotColors.holiday1, dotColors.holiday2],
+        },
+      })
+    : null;
+
+  return newPreviousDays;
+};
+

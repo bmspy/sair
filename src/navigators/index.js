@@ -1,4 +1,5 @@
 import React from 'react';
+import RNBootSplash from "react-native-bootsplash";
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
@@ -30,10 +31,12 @@ import {
   SchoolRoute,
   SchoolLocation,
   ShowNote,
+  ExportPlan,
+  ActualPlan,
 } from '../screens';
-import {ManagerHome, ManagerPlans} from '../ManagerScreens';
-import {HeadHome} from '../HeadScreens';
-import {DriverHome, DriverDetails} from '../DriverScreens';
+import {ManagerHome, ManagerPlans, ManagerPlan} from '../ManagerScreens';
+import {HeadHome, HeadPlan} from '../HeadScreens';
+import {DriverHome, DriverDetails, DriverPlan} from '../DriverScreens';
 import MoreSignupDetails from '../screens/SignUp/more-signup-details.screen';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {CustomDrawerContent} from '../components';
@@ -42,7 +45,7 @@ const AppStack = createNativeStackNavigator();
 
 function MyDrawer() {
   return (
-    <NavigationContainer>
+    <NavigationContainer onReady={() => RNBootSplash.hide({ fade: true })}>
       <Drawer.Navigator
         edgeWidth={0}
         screenOptions={{
@@ -106,14 +109,20 @@ function AppNavigator() {
         name={'DriverInformation'}
         component={DriverInformation}
       />
+      <AppStack.Screen name={'ExportPlan'} component={ExportPlan} />
+      <AppStack.Screen name={'ActualPlan'} component={ActualPlan} />
+      <AppStack.Screen name={'PrivacyPolicy'} component={PrivacyPolicy} />
       {/* MANAGER SCREENS */}
       <AppStack.Screen name={'ManagerHome'} component={ManagerHome} />
       <AppStack.Screen name={'ManagerPlans'} component={ManagerPlans} />
+      <AppStack.Screen name={'ManagerPlan'} component={ManagerPlan} />
       {/* HEAD SCREENS */}
       <AppStack.Screen name={'HeadHome'} component={HeadHome} />
+      <AppStack.Screen name={'HeadPlan'} component={HeadPlan} />
       {/* DRIVER SCREENS */}
       <AppStack.Screen name={'DriverHome'} component={DriverHome} />
       <AppStack.Screen name={'DriverDetails'} component={DriverDetails} />
+      <AppStack.Screen name={'DriverPlan'} component={DriverPlan} />
     </AppStack.Navigator>
   );
 }
